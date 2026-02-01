@@ -53,6 +53,10 @@ body {
   color: rgba(240, 237, 230, 0.9) !important;
 }
 
+.dark .nav-link:hover {
+  color: #ffffff !important;
+}
+
 .dark .bg-ink {
   background-color: #f0ede6 !important;
   color: #111317 !important;
