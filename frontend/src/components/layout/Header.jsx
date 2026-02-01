@@ -11,9 +11,6 @@ export const Header = () => {
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <a href="/" className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-full border border-line flex items-center justify-center font-display text-lg">
-              P
-            </div>
             <span className="font-display text-2xl">Playto</span>
           </a>
 
