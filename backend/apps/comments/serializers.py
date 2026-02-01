@@ -1,0 +1,39 @@
+from rest_framework import serializers
+from .models import Comment
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author_username = serializers.CharField(source='author.username', read_only=True)
+    replies = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'content', 'author_username', 'created_at', 'like_count', 'level', 'replies']
+
+    def get_replies(self, obj):
+        if obj.level < 5:
+            replies = obj.get_children().select_related('author')
+            return CommentSerializer(replies, many=True, context=self.context).data
+        return []
+
+
+class CommentFlatSerializer(serializers.ModelSerializer):
+    author_username = serializers.CharField(source='author.username', read_only=True)
+    parent_id = serializers.IntegerField(allow_null=True, required=False)
+
+    class Meta:
+        model = Comment
+        fields = [
+            'id',
+            'post',
+            'parent_id',
+            'content',
+            'author_username',
+            'created_at',
+            'like_count',
+            'level',
+            'lft',
+            'rght',
+            'tree_id',
+        ]
+        read_only_fields = ['author_username', 'created_at', 'like_count', 'level', 'lft', 'rght', 'tree_id']

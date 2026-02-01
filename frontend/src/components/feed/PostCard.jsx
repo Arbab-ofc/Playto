@@ -1,0 +1,29 @@
+import { motion } from 'framer-motion';
+import { Heart } from 'lucide-react';
+import { formatDate } from '../../utils/formatDate';
+import { useTogglePostLike } from '../../hooks/usePosts';
+
+export const PostCard = ({ post }) => {
+  const toggleLike = useTogglePostLike();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="phone-frame p-5"
+    >
+      <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-ink/60 mb-3">
+        <span>{post.author_username}</span>
+        <span>{formatDate(post.created_at)}</span>
+      </div>
+      <p className="text-sm leading-relaxed mb-4 text-ink/90">{post.content}</p>
+      <button
+        onClick={() => toggleLike.mutate(post.id)}
+        className="flex items-center space-x-2 text-xs uppercase tracking-[0.2em] text-ink/70 hover:text-accent"
+      >
+        <Heart size={14} />
+        <span>{post.like_count}</span>
+      </button>
+    </motion.div>
+  );
+};

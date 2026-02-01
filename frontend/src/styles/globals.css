@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @media (max-width: 639px) {
+    .container {
+      @apply px-4;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .container {
+      @apply px-6;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      @apply px-8 max-w-6xl mx-auto;
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-ink font-body;
+}
+
+.canvas-bg {
+  background: radial-gradient(circle at 20% 10%, rgba(216, 139, 109, 0.35), transparent 35%),
+    radial-gradient(circle at 80% 15%, rgba(118, 96, 188, 0.25), transparent 38%),
+    radial-gradient(circle at 20% 90%, rgba(232, 195, 140, 0.3), transparent 35%),
+    #f4eee6;
+}
+
+.phone-frame {
+  @apply bg-cream border border-line rounded-[38px] shadow-soft;
+}
+
+.ink-line {
+  stroke: #b7afa3;
+}
