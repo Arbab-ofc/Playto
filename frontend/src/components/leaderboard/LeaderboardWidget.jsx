@@ -6,8 +6,6 @@ import { LoadingSpinner } from '../ui/LoadingSpinner';
 export const LeaderboardWidget = () => {
   const { data: leaderboard, isLoading } = useLeaderboard();
 
-  if (isLoading) return <LoadingSpinner />;
-
   return (
     <div id="leaderboard" className="phone-frame p-6">
       <div className="flex items-center space-x-3 mb-6">
@@ -21,7 +19,22 @@ export const LeaderboardWidget = () => {
       </div>
 
       <div className="space-y-3">
-        {leaderboard?.length ? (
+        {isLoading ? (
+          <div className="space-y-3">
+            {[0, 1, 2].map((item) => (
+              <div
+                key={item}
+                className="flex items-center justify-between p-3 rounded-2xl border border-line/60 bg-cream"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 rounded-full border border-line animate-pulse" />
+                  <div className="h-3 w-24 bg-line/60 rounded-full animate-pulse" />
+                </div>
+                <div className="h-3 w-12 bg-line/60 rounded-full animate-pulse" />
+              </div>
+            ))}
+          </div>
+        ) : leaderboard?.length ? (
           leaderboard.map((user, index) => (
             <motion.div
               key={user.username}
