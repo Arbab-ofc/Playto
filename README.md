@@ -1,16 +1,19 @@
 # Playto - Community Feed Platform
 
-A modern, gamified community discussion platform with threaded comments and real-time leaderboards.
+A modern, gamified community discussion platform with threaded comments, anonymous mode, and real-time leaderboards.
 
 ## Features
 
 - Create and share posts
-- Nested threaded comments (Reddit-style)
+- Threaded comments with nested replies (up to 50 levels)
+- Bottom-sheet post detail view with full comment tree
 - Like system with karma tracking
-- Real-time 24-hour leaderboard
-- Dark/Light mode
+- 24-hour leaderboard (cached)
+- Anonymous mode for logged-in users
+- Profile page with editable bio and user stats
+- Infinite scroll feeds
+- Dark/Light mode with textured dark background
 - Fully responsive design
-- Retro 3D aesthetic
 
 ## Tech Stack
 
@@ -26,6 +29,7 @@ Frontend:
 - Tailwind CSS
 - Framer Motion
 - Lucide Icons
+- React Query
 
 ## Prerequisites
 
@@ -56,7 +60,7 @@ pip install -r requirements.txt
 cp .env.example .env
 python manage.py migrate
 python manage.py createsuperuser
-python manage.py runserver
+python manage.py runserver 127.0.0.1:8000
 ```
 
 Frontend Setup
@@ -65,7 +69,7 @@ Frontend Setup
 cd frontend
 npm install
 cp .env.example .env
-npm run dev
+npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
 ## Environment Variables
@@ -77,7 +81,7 @@ SECRET_KEY=your-secret-key
 DATABASE_URL=postgresql://playto_user:playto_password@localhost:5432/playto_db
 REDIS_URL=redis://localhost:6379/0
 ALLOWED_HOSTS=localhost,127.0.0.1
-CORS_ALLOWED_ORIGINS=http://localhost:5173
+CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 ```
 
 Frontend (.env)
@@ -85,10 +89,31 @@ Frontend (.env)
 VITE_API_URL=http://localhost:8000/api
 ```
 
-## API Documentation
+## Authentication
 
-- Swagger UI: http://localhost:8000/api/docs/
-- ReDoc: http://localhost:8000/api/redoc/
+- JWT-based authentication.
+- Login/register pages are blocked for logged-in users.
+- Profile page is protected.
+- Invalid tokens are cleared automatically on 401.
+
+## API Highlights
+
+- `GET /api/posts/` (public, cached)
+- `POST /api/posts/` (auth required)
+- `POST /api/posts/{id}/like/`
+- `POST /api/comments/` (auth required)
+- `POST /api/comments/{id}/like/`
+- `GET /api/leaderboard/` (public, cached)
+- `GET /api/auth/me/`
+- `PATCH /api/auth/me/` (bio + profile updates)
+
+## UI/UX Highlights
+
+- Tactile, booking-flow inspired layout
+- Light and dark mode (dark mode includes a subtle noise texture)
+- Bottom-sheet post detail drawer
+- Infinite scroll on posts
+- Profile page with bio editing and posts list
 
 ## Running Tests
 
@@ -132,11 +157,10 @@ Playto/
 
 - N+1 query prevention using select_related() and prefetch_related()
 - Database indexing on frequently queried fields
-- Redis caching for leaderboard
+- Redis caching for leaderboard and posts
 - Atomic transactions for like operations
 - React Query for data caching and state management
-- Code splitting and lazy loading
-- Image optimization
+- Infinite scroll for posts
 
 ## Contributing
 
