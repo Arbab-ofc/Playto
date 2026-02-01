@@ -32,7 +32,7 @@ export const PostCard = ({ post }) => {
 
       {Array.isArray(post.comments) && post.comments.length > 0 && (
         <div className="mt-4">
-          <CommentTree comments={post.comments} maxDepth={50} />
+          <CommentTree comments={post.comments} postId={post.id} maxDepth={50} />
         </div>
       )}
 
