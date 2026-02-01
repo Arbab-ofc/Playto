@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
 import { useTogglePostLike } from '../../hooks/usePosts';
 import { useAuth } from '../../hooks/useAuth';
 import { CommentForm } from '../comments/CommentForm';
-import { CommentTree } from '../comments/CommentTree';
+import { PostDetailDrawer } from './PostDetailDrawer';
 
 export const PostCard = ({ post }) => {
   const toggleLike = useTogglePostLike();
   const { isAuthenticated } = useAuth();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
     <motion.div
@@ -32,7 +34,20 @@ export const PostCard = ({ post }) => {
 
       {Array.isArray(post.comments) && post.comments.length > 0 && (
         <div className="mt-4">
-          <CommentTree comments={post.comments} postId={post.id} maxDepth={50} />
+          <div className="border border-line rounded-2xl p-3 bg-cream">
+            <p className="text-xs uppercase tracking-[0.2em] text-ink/60">
+              {post.comments[0].author_username}
+            </p>
+            <p className="text-sm text-ink/70 mt-2">{post.comments[0].content}</p>
+          </div>
+          {post.comments.length > 1 && (
+            <button
+              onClick={() => setIsDrawerOpen(true)}
+              className="mt-3 text-xs uppercase tracking-[0.2em] text-ink/60 hover:text-ink"
+            >
+              Show all comments
+            </button>
+          )}
         </div>
       )}
 
@@ -48,6 +63,8 @@ export const PostCard = ({ post }) => {
           </p>
         )}
       </div>
+
+      <PostDetailDrawer post={post} isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </motion.div>
   );
 };
