@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'email',
+            'first_name',
             'created_at',
             'total_karma',
             'karma_last_24h',

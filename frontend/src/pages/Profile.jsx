@@ -49,9 +49,10 @@ export const Profile = () => {
                   </h1>
                   <p className="text-sm text-ink/60 mt-2">{user?.email || 'No email on file'}</p>
                 </div>
-                <div className="w-16 h-16 rounded-full border border-line flex items-center justify-center font-display text-2xl">
-                  {user?.username?.[0]?.toUpperCase() || 'P'}
-                </div>
+            <div className="text-right">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/60">First name</p>
+              <p className="font-display text-2xl mt-2">{user?.first_name || 'Guest'}</p>
+            </div>
               </div>
 
               <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
