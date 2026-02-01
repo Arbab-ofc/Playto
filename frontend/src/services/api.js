@@ -12,4 +12,19 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const original = error.config;
+    if (error.response?.status === 401 && original && !original._retry) {
+      original._retry = true;
+      localStorage.removeItem('access');
+      localStorage.removeItem('refresh');
+      delete original.headers?.Authorization;
+      return api(original);
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;
