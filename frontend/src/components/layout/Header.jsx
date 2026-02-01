@@ -17,7 +17,9 @@ export const Header = () => {
           <div className="hidden lg:flex items-center space-x-6 text-sm uppercase tracking-[0.2em] text-ink/70">
             <a href="/" className="hover:text-ink transition-colors">Feed</a>
             <a href="/#leaderboard" className="hover:text-ink transition-colors">Leaderboard</a>
-            <a href="/profile" className="hover:text-ink transition-colors">Profile</a>
+            {isAuthenticated && (
+              <a href="/profile" className="hover:text-ink transition-colors">Profile</a>
+            )}
             {isAuthenticated ? (
               <button onClick={logout} className="hover:text-ink transition-colors">Logout</button>
             ) : (
@@ -78,9 +80,11 @@ export const Header = () => {
                 <a href="/#leaderboard" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
                   Leaderboard
                 </a>
-                <a href="/profile" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
-                  Profile
-                </a>
+                {isAuthenticated && (
+                  <a href="/profile" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
+                    Profile
+                  </a>
+                )}
                 {isAuthenticated ? (
                   <button
                     className="block hover:text-ink text-left w-full"
