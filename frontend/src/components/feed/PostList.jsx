@@ -1,16 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { PostCard } from './PostCard';
 import { usePosts } from '../../hooks/usePosts';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const PostList = () => {
-  const [page, setPage] = useState(1);
-  const { data, isLoading } = usePosts(page);
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = usePosts();
+  const sentinelRef = useRef(null);
 
-  const posts = data?.results || data || [];
-  const total = data?.count || posts.length;
-  const pageSize = 10;
-  const totalPages = total ? Math.ceil(total / pageSize) : 1;
+  const posts = data?.pages?.flatMap((page) => page.results || []) || [];
+
+  useEffect(() => {
+    if (!hasNextPage) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+
+    if (sentinelRef.current) observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <div className="space-y-6">
@@ -62,25 +80,17 @@ export const PostList = () => {
         )}
       </AnimatePresence>
 
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between border border-line rounded-2xl p-3 bg-cream">
-          <button
-            className="px-3 py-1 text-xs uppercase tracking-[0.2em] text-ink/70 hover:text-ink disabled:opacity-40"
-            onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-            disabled={page === 1}
-          >
-            Prev
-          </button>
-          <div className="text-xs uppercase tracking-[0.3em] text-ink/60">
-            Page {page} / {totalPages}
-          </div>
-          <button
-            className="px-3 py-1 text-xs uppercase tracking-[0.2em] text-ink/70 hover:text-ink disabled:opacity-40"
-            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-            disabled={page === totalPages}
-          >
-            Next
-          </button>
+      <div ref={sentinelRef} />
+
+      {isFetchingNextPage && (
+        <div className="phone-frame p-4">
+          <div className="h-3 w-24 bg-line/60 rounded-full animate-pulse" />
+        </div>
+      )}
+
+      {!hasNextPage && posts.length > 0 && (
+        <div className="text-xs uppercase tracking-[0.3em] text-ink/60 text-center">
+          You have reached the end.
         </div>
       )}
     </div>

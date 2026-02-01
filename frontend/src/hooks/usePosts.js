@@ -1,12 +1,18 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../services/api';
 
-export const usePosts = (page = 1) => {
-  return useQuery({
-    queryKey: ['posts', page],
-    queryFn: async () => {
-      const { data } = await api.get('/posts/', { params: { page } });
+export const usePosts = () => {
+  return useInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: async ({ pageParam = 1 }) => {
+      const { data } = await api.get('/posts/', { params: { page: pageParam } });
       return data;
+    },
+    getNextPageParam: (lastPage) => {
+      if (!lastPage?.next) return undefined;
+      const nextUrl = new URL(lastPage.next);
+      const nextPage = Number(nextUrl.searchParams.get('page'));
+      return Number.isNaN(nextPage) ? undefined : nextPage;
     },
     keepPreviousData: true
   });
