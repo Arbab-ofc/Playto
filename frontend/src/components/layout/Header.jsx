@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <header className="py-8 relative z-20">
@@ -19,6 +21,11 @@ export const Header = () => {
             <a href="/" className="hover:text-ink transition-colors">Feed</a>
             <a href="/#leaderboard" className="hover:text-ink transition-colors">Leaderboard</a>
             <a href="/profile" className="hover:text-ink transition-colors">Profile</a>
+            {isAuthenticated ? (
+              <button onClick={logout} className="hover:text-ink transition-colors">Logout</button>
+            ) : (
+              <a href="/login" className="hover:text-ink transition-colors">Login</a>
+            )}
           </div>
 
           <button
@@ -77,6 +84,21 @@ export const Header = () => {
                 <a href="/profile" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
                   Profile
                 </a>
+                {isAuthenticated ? (
+                  <button
+                    className="block hover:text-ink text-left w-full"
+                    onClick={() => {
+                      logout();
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <a href="/login" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
+                    Login
+                  </a>
+                )}
               </div>
 
             </motion.aside>

@@ -2,6 +2,7 @@ import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { Sidebar } from '../components/layout/Sidebar';
 import { CreatePost } from '../components/feed/CreatePost';
+import { AuthGate } from '../components/auth/AuthGate';
 import { PostList } from '../components/feed/PostList';
 
 export const Home = () => {
@@ -50,7 +51,9 @@ export const Home = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <section className="space-y-6">
-            <CreatePost />
+            <AuthGate>
+              <CreatePost />
+            </AuthGate>
             <div className="phone-frame p-6">
               <h3 className="font-display text-xl mb-2">Add context</h3>
               <p className="text-sm text-ink/70">
