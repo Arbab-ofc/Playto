@@ -4,8 +4,11 @@ import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { useAuth } from '../hooks/useAuth';
 
+const passwordRule =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
 export const Register = () => {
-  const [form, setForm] = useState({ username: '', email: '', password: '' });
+  const [form, setForm] = useState({ full_name: '', username: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
@@ -19,6 +22,11 @@ export const Register = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    if (!passwordRule.test(form.password)) {
+      setError('Password must be 8+ chars with uppercase, lowercase, number, and symbol.');
+      setLoading(false);
+      return;
+    }
     try {
       await register(form);
       navigate('/');
@@ -67,11 +75,22 @@ export const Register = () => {
             <p className="text-xs uppercase tracking-[0.3em] text-ink/60">Create account</p>
             <h2 className="font-display text-2xl mt-3">Register</h2>
             <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
-              <div>
-                <label className="text-xs uppercase tracking-[0.2em] text-ink/60">Username</label>
-                <input
-                  name="username"
-                  value={form.username}
+            <div>
+              <label className="text-xs uppercase tracking-[0.2em] text-ink/60">Full name</label>
+              <input
+                name="full_name"
+                value={form.full_name}
+                onChange={handleChange}
+                className="w-full mt-2 bg-cream border border-line rounded-xl px-3 py-2 text-sm"
+                placeholder="Your full name"
+                required
+              />
+            </div>
+            <div>
+              <label className="text-xs uppercase tracking-[0.2em] text-ink/60">Username</label>
+              <input
+                name="username"
+                value={form.username}
                   onChange={handleChange}
                   className="w-full mt-2 bg-cream border border-line rounded-xl px-3 py-2 text-sm"
                   placeholder="Choose a username"
@@ -90,18 +109,21 @@ export const Register = () => {
                   required
                 />
               </div>
-              <div>
-                <label className="text-xs uppercase tracking-[0.2em] text-ink/60">Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  className="w-full mt-2 bg-cream border border-line rounded-xl px-3 py-2 text-sm"
-                  placeholder="Create a password"
-                  required
-                />
-              </div>
+            <div>
+              <label className="text-xs uppercase tracking-[0.2em] text-ink/60">Password</label>
+              <input
+                name="password"
+                type="password"
+                value={form.password}
+                onChange={handleChange}
+                className="w-full mt-2 bg-cream border border-line rounded-xl px-3 py-2 text-sm"
+                placeholder="Create a password"
+                required
+              />
+              <p className="text-xs text-ink/60 mt-2">
+                Use 8+ chars with uppercase, lowercase, number, and symbol.
+              </p>
+            </div>
               {error && <p className="text-sm text-accentDark">{error}</p>}
               <button
                 type="submit"

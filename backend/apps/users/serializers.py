@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
@@ -15,15 +16,33 @@ class UserSerializer(serializers.ModelSerializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
+    full_name = serializers.CharField(write_only=True, required=False, allow_blank=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password', 'full_name']
+
+    def validate_password(self, value):
+        pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$'
+        if not re.match(pattern, value):
+            raise serializers.ValidationError(
+                'Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.'
+            )
+        return value
 
     def create(self, validated_data):
+        full_name = validated_data.pop('full_name', '').strip()
+        first_name = ''
+        last_name = ''
+        if full_name:
+            parts = full_name.split()
+            first_name = parts[0]
+            last_name = ' '.join(parts[1:]) if len(parts) > 1 else ''
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
+            first_name=first_name,
+            last_name=last_name,
         )
         return user
