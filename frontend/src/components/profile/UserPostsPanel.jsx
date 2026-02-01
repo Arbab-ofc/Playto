@@ -59,7 +59,11 @@ export const UserPostsPanel = ({ userId }) => {
           const repliesCount = countReplies(comments);
           const tree = buildCommentTree(comments);
           return (
-            <div key={post.id} className="border border-line rounded-2xl p-4 bg-cream">
+            <a
+              key={post.id}
+              href={`/#post-${post.id}`}
+              className="block border border-line rounded-2xl p-4 bg-cream hover:border-ink/30 transition-colors"
+            >
               <div className="flex items-center justify-between text-xs text-ink/60">
                 <span>{formatDate(post.created_at)}</span>
                 <span>{post.like_count} likes</span>
@@ -77,7 +81,7 @@ export const UserPostsPanel = ({ userId }) => {
                   <p className="text-sm text-ink/70 mt-2">{tree[0].content}</p>
                 </div>
               )}
-            </div>
+            </a>
           );
         })}
 

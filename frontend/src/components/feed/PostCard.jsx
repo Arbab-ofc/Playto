@@ -18,6 +18,7 @@ export const PostCard = ({ post }) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className="phone-frame p-5"
+      id={`post-${post.id}`}
     >
       <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-ink/60 mb-3">
         <span>{post.author_username}</span>
