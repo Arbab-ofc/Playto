@@ -1,13 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../services/api';
 
-export const usePosts = () => {
+export const usePosts = (page = 1) => {
   return useQuery({
-    queryKey: ['posts'],
+    queryKey: ['posts', page],
     queryFn: async () => {
-      const { data } = await api.get('/posts/');
+      const { data } = await api.get('/posts/', { params: { page } });
       return data;
-    }
+    },
+    keepPreviousData: true
   });
 };
 

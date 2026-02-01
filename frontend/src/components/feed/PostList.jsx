@@ -1,11 +1,16 @@
+import { useState } from 'react';
 import { PostCard } from './PostCard';
 import { usePosts } from '../../hooks/usePosts';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const PostList = () => {
-  const { data, isLoading } = usePosts();
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = usePosts(page);
 
   const posts = data?.results || data || [];
+  const total = data?.count || posts.length;
+  const pageSize = 10;
+  const totalPages = total ? Math.ceil(total / pageSize) : 1;
 
   return (
     <div className="space-y-6">
@@ -56,6 +61,28 @@ export const PostList = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between border border-line rounded-2xl p-3 bg-cream">
+          <button
+            className="px-3 py-1 text-xs uppercase tracking-[0.2em] text-ink/70 hover:text-ink disabled:opacity-40"
+            onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+          <div className="text-xs uppercase tracking-[0.3em] text-ink/60">
+            Page {page} / {totalPages}
+          </div>
+          <button
+            className="px-3 py-1 text-xs uppercase tracking-[0.2em] text-ink/70 hover:text-ink disabled:opacity-40"
+            onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
