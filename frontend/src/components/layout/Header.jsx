@@ -18,6 +18,7 @@ export const Header = () => {
           </a>
 
           <div className="hidden lg:flex items-center space-x-6 text-sm uppercase tracking-[0.2em] text-ink/70">
+            <a href="/" className="nav-link hover:text-ink transition-colors">Home</a>
             {isAuthenticated && (
               <a href="/profile" className="nav-link hover:text-ink transition-colors">Profile</a>
             )}
@@ -76,6 +77,9 @@ export const Header = () => {
               </div>
 
               <div className="space-y-6 text-xs uppercase tracking-[0.3em] text-ink/70">
+                <a href="/" className="nav-link block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
+                  Home
+                </a>
                 {isAuthenticated && (
                   <a href="/profile" className="nav-link block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
                     Profile
