@@ -10,7 +10,7 @@ export const AuthGate = ({ children }) => {
     <div className="phone-frame p-6">
       <h3 className="font-display text-xl mb-2">Share a moment</h3>
       <p className="text-sm text-ink/70 mb-4">
-        Sign in to post updates and join the conversation.
+        Sign in once to post updates, comment, and unlock your profile.
       </p>
       <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.3em]">
         <Link
