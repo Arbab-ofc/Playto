@@ -52,10 +52,10 @@ export const Header = () => {
               aria-label="Close menu overlay"
             />
             <motion.aside
-              className="absolute left-0 top-0 h-full w-72 bg-cream border-r border-line shadow-lift p-6"
-              initial={{ x: '-100%' }}
+              className="absolute right-0 top-0 h-full w-72 bg-cream border-l border-line shadow-lift p-6"
+              initial={{ x: '100%' }}
               animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
+              exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 260, damping: 30 }}
             >
               <div className="flex items-center justify-between mb-10">
@@ -81,9 +81,6 @@ export const Header = () => {
                 </a>
               </div>
 
-              <div className="mt-12 text-sm text-ink/60">
-                Left-docked navigation for quick access.
-              </div>
             </motion.aside>
           </motion.div>
         )}
