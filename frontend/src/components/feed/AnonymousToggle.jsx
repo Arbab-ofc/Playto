@@ -1,7 +1,11 @@
 import { useAnon } from '../../context/AnonContext';
+import { useAuth } from '../../hooks/useAuth';
 
 export const AnonymousToggle = () => {
   const { anonymous, setAnonymous } = useAnon();
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) return null;
 
   return (
     <div className="flex items-center justify-between border border-line rounded-2xl p-4 bg-cream">
