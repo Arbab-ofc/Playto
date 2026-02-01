@@ -7,7 +7,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     SECRET_KEY=(str, 'unsafe-secret-key'),
     ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
-    CORS_ALLOWED_ORIGINS=(list, ['http://localhost:5173']),
+    CORS_ALLOWED_ORIGINS=(list, ['http://localhost:5173', 'http://127.0.0.1:5173']),
     DATABASE_URL=(str, 'postgresql://playto_user:playto_password@localhost:5432/playto_db'),
     REDIS_URL=(str, 'redis://localhost:6379/0'),
 )
@@ -104,6 +104,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173']
 
 CACHES = {
     'default': {
