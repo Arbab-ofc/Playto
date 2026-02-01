@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useUserPosts } from '../hooks/usePosts';
+import { UserPostsPanel } from '../components/profile/UserPostsPanel';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
-import { formatDate } from '../utils/formatDate';
 
 export const Profile = () => {
   const { user, updateProfile } = useAuth();
-  const { data } = useUserPosts(user?.id);
-  const posts = data?.results || data || [];
   const [editing, setEditing] = useState(false);
   const [bio, setBio] = useState(user?.bio || '');
   const [saving, setSaving] = useState(false);
@@ -138,23 +135,7 @@ export const Profile = () => {
                 </div>
               </div>
 
-              <div className="phone-frame p-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-ink/60">Your posts</p>
-                <div className="mt-4 space-y-3">
-                  {posts.length ? (
-                    posts.map((post) => (
-                      <div key={post.id} className="border border-line rounded-2xl p-4 bg-cream">
-                        <p className="text-xs text-ink/60">{formatDate(post.created_at)}</p>
-                        <p className="text-sm text-ink/70 mt-2">{post.content}</p>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="border border-line rounded-2xl p-4 bg-cream text-sm text-ink/60">
-                      No posts yet.
-                    </div>
-                  )}
-                </div>
-              </div>
+              <UserPostsPanel userId={user?.id} />
             </div>
           </div>
         </div>

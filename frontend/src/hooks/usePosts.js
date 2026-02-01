@@ -61,3 +61,21 @@ export const useUserPosts = (userId) => {
     enabled: Boolean(userId)
   });
 };
+
+export const useUserPostsInfinite = (userId) => {
+  return useInfiniteQuery({
+    queryKey: ['posts', 'user', userId, 'infinite'],
+    queryFn: async ({ pageParam = 1 }) => {
+      const { data } = await api.get('/posts/', { params: { author: userId, page: pageParam } });
+      return data;
+    },
+    enabled: Boolean(userId),
+    getNextPageParam: (lastPage) => {
+      if (!lastPage?.next) return undefined;
+      const nextUrl = new URL(lastPage.next);
+      const nextPage = Number(nextUrl.searchParams.get('page'));
+      return Number.isNaN(nextPage) ? undefined : nextPage;
+    },
+    keepPreviousData: true
+  });
+};
