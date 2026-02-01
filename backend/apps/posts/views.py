@@ -1,5 +1,7 @@
 import logging
 from django.db.models import Prefetch
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -17,6 +19,10 @@ class PostListCreateView(generics.ListCreateAPIView):
         Prefetch('comments', queryset=Comment.objects.select_related('author').order_by('tree_id', 'lft'))
     )
     serializer_class = PostSerializer
+
+    @method_decorator(cache_page(30))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
