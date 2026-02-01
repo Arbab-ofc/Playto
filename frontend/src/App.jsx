@@ -3,6 +3,7 @@ import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { PostDetailPage } from './pages/PostDetailPage';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { PublicRoute } from './components/auth/PublicRoute';
 
@@ -11,6 +12,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/posts/:id" element={<PostDetailPage />} />
         <Route
           path="/login"
           element={

@@ -61,7 +61,7 @@ export const UserPostsPanel = ({ userId }) => {
           return (
             <a
               key={post.id}
-              href={`/#post-${post.id}`}
+              href={`/posts/${post.id}`}
               className="block border border-line rounded-2xl p-4 bg-cream hover:border-ink/30 transition-colors"
             >
               <div className="flex items-center justify-between text-xs text-ink/60">
