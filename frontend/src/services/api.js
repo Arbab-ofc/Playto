@@ -20,6 +20,7 @@ api.interceptors.response.use(
       original._retry = true;
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      window.dispatchEvent(new Event('auth:logout'));
       delete original.headers?.Authorization;
       return api(original);
     }

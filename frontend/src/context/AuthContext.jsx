@@ -29,6 +29,12 @@ export const AuthProvider = ({ children }) => {
     hydrate();
   }, []);
 
+  useEffect(() => {
+    const handleLogout = () => setUser(null);
+    window.addEventListener('auth:logout', handleLogout);
+    return () => window.removeEventListener('auth:logout', handleLogout);
+  }, []);
+
   const login = async (credentials) => {
     await loginRequest(credentials);
     const me = await getMe();
@@ -59,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     () => ({
       user,
       loading,
-      isAuthenticated: Boolean(user),
+      isAuthenticated: Boolean(user) && Boolean(getAccessToken()),
       login,
       register,
       updateProfile,
