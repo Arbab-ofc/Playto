@@ -16,9 +16,9 @@ export const Header = () => {
           </div>
 
           <div className="hidden lg:flex items-center space-x-6 text-sm uppercase tracking-[0.2em] text-ink/70">
-            <a href="#" className="hover:text-ink transition-colors">Feed</a>
-            <a href="#leaderboard" className="hover:text-ink transition-colors">Leaderboard</a>
-            <a href="#profile" className="hover:text-ink transition-colors">Profile</a>
+            <a href="/" className="hover:text-ink transition-colors">Feed</a>
+            <a href="/#leaderboard" className="hover:text-ink transition-colors">Leaderboard</a>
+            <a href="/profile" className="hover:text-ink transition-colors">Profile</a>
           </div>
 
           <button
@@ -68,13 +68,13 @@ export const Header = () => {
               </div>
 
               <div className="space-y-6 text-xs uppercase tracking-[0.3em] text-ink/70">
-                <a href="#" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
+                <a href="/" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
                   Feed
                 </a>
-                <a href="#leaderboard" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
+                <a href="/#leaderboard" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
                   Leaderboard
                 </a>
-                <a href="#profile" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
+                <a href="/profile" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
                   Profile
                 </a>
               </div>
