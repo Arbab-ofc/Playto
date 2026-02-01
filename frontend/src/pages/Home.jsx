@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <div className="min-h-screen canvas-bg text-ink relative overflow-hidden">
       <svg
-        className="absolute left-0 top-24 hidden lg:block -z-10 pointer-events-none"
+        className="absolute left-0 top-24 hidden lg:block z-0 opacity-70 pointer-events-none"
         width="420"
         height="240"
         viewBox="0 0 420 240"
@@ -23,7 +23,7 @@ export const Home = () => {
         />
       </svg>
       <svg
-        className="absolute right-0 top-32 hidden lg:block -z-10 pointer-events-none"
+        className="absolute right-0 top-32 hidden lg:block z-0 opacity-70 pointer-events-none"
         width="340"
         height="280"
         viewBox="0 0 340 280"
@@ -37,7 +37,8 @@ export const Home = () => {
         />
       </svg>
 
-      <Header />
+      <div className="relative z-10">
+        <Header />
 
       <main className="container mx-auto px-4 pb-16">
         <section className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 items-center mb-12">
@@ -100,6 +101,7 @@ export const Home = () => {
       </main>
 
       <Footer />
+      </div>
     </div>
   );
 };

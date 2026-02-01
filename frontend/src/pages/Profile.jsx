@@ -8,7 +8,7 @@ export const Profile = () => {
   return (
     <div className="min-h-screen canvas-bg text-ink relative overflow-hidden">
       <svg
-        className="absolute left-0 top-24 hidden lg:block -z-10 pointer-events-none"
+        className="absolute left-0 top-24 hidden lg:block z-0 opacity-70 pointer-events-none"
         width="420"
         height="240"
         viewBox="0 0 420 240"
@@ -22,7 +22,7 @@ export const Profile = () => {
         />
       </svg>
       <svg
-        className="absolute right-0 top-32 hidden lg:block -z-10 pointer-events-none"
+        className="absolute right-0 top-32 hidden lg:block z-0 opacity-70 pointer-events-none"
         width="340"
         height="280"
         viewBox="0 0 340 280"
@@ -35,9 +35,9 @@ export const Profile = () => {
           className="ink-line"
         />
       </svg>
-
-      <Header />
-      <div className="container mx-auto px-4 py-12">
+      <div className="relative z-10">
+        <Header />
+        <div className="container mx-auto px-4 py-12">
         <div className="phone-frame p-8 max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
@@ -72,8 +72,9 @@ export const Profile = () => {
             </div>
           </div>
         </div>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };
