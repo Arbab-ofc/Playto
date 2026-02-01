@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { useAuth } from '../hooks/useAuth';
@@ -8,6 +9,7 @@ export const Login = () => {
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -104,15 +106,25 @@ export const Login = () => {
               </div>
               <div>
                 <label className="text-xs uppercase tracking-[0.2em] text-ink/60">Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  className="w-full mt-2 bg-cream border border-line rounded-xl px-3 py-2 text-sm"
-                  placeholder="••••••••"
-                  required
-                />
+                <div className="relative mt-2">
+                  <input
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={form.password}
+                    onChange={handleChange}
+                    className="w-full bg-cream border border-line rounded-xl px-3 py-2 pr-10 text-sm"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-ink/60 hover:text-ink"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
               {error && <p className="text-sm text-accentDark">{error}</p>}
               <button
