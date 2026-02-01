@@ -21,11 +21,11 @@ export const CreatePost = () => {
       <h3 className="font-display text-2xl mb-4">Share a moment</h3>
       <div className="space-y-4">
         <label className="text-xs uppercase tracking-[0.2em] text-ink/60">Post</label>
-        <Input
+        <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write a concise update"
-          className="mb-2"
+          className="w-full min-h-[140px] bg-cream border border-line rounded-xl px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 mb-2"
         />
       </div>
       <div className="flex justify-end mt-6">
