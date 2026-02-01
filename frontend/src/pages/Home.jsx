@@ -7,34 +7,6 @@ import { PostList } from '../components/feed/PostList';
 export const Home = () => {
   return (
     <div className="min-h-screen canvas-bg text-ink relative overflow-hidden">
-      <svg
-        className="absolute left-0 top-24 hidden lg:block"
-        width="420"
-        height="240"
-        viewBox="0 0 420 240"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M10 90C100 30 170 140 260 80C330 40 380 60 410 20"
-          strokeWidth="2"
-          className="ink-line"
-        />
-      </svg>
-      <svg
-        className="absolute right-0 top-32 hidden lg:block"
-        width="340"
-        height="280"
-        viewBox="0 0 340 280"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M10 40C60 70 50 140 110 160C170 180 210 120 260 140C300 155 320 210 330 260"
-          strokeWidth="2"
-          className="ink-line"
-        />
-      </svg>
 
       <Header />
 
