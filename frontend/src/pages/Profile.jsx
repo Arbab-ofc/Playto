@@ -2,35 +2,40 @@ import { useAuth } from '../hooks/useAuth';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 
-const THREADS = [
-  {
-    id: 1,
-    title: 'Morning ritual check-in',
-    snippet: 'Sharing the top three priorities I want to protect today.',
-    replies: 8,
-    status: 'Open'
-  },
-  {
-    id: 2,
-    title: 'Design critique request',
-    snippet: 'Feedback needed on the latest booking-inspired layout.',
-    replies: 5,
-    status: 'Active'
-  },
-  {
-    id: 3,
-    title: 'Productivity stack',
-    snippet: 'Tools I use to keep the community feed moving.',
-    replies: 3,
-    status: 'Archived'
-  }
-];
-
 export const Profile = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen canvas-bg text-ink">
+    <div className="min-h-screen canvas-bg text-ink relative overflow-hidden">
+      <svg
+        className="absolute left-0 top-24 hidden lg:block"
+        width="420"
+        height="240"
+        viewBox="0 0 420 240"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 90C100 30 170 140 260 80C330 40 380 60 410 20"
+          strokeWidth="2"
+          className="ink-line"
+        />
+      </svg>
+      <svg
+        className="absolute right-0 top-32 hidden lg:block"
+        width="340"
+        height="280"
+        viewBox="0 0 340 280"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10 40C60 70 50 140 110 160C170 180 210 120 260 140C300 155 320 210 330 260"
+          strokeWidth="2"
+          className="ink-line"
+        />
+      </svg>
+
       <Header />
       <div className="container mx-auto px-4 py-12">
         <div className="phone-frame p-8 max-w-5xl mx-auto">
@@ -60,22 +65,10 @@ export const Profile = () => {
             </div>
           </div>
 
-          <div className="mt-10">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display text-xl">Threads</h2>
-              <p className="text-xs uppercase tracking-[0.3em] text-ink/60">Recent</p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {THREADS.map((thread) => (
-                <div key={thread.id} className="border border-line rounded-2xl p-5 bg-cream">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs uppercase tracking-[0.2em] text-ink/60">{thread.status}</p>
-                    <span className="text-xs text-ink/60">{thread.replies} replies</span>
-                  </div>
-                  <h3 className="font-display text-lg mb-2">{thread.title}</h3>
-                  <p className="text-sm text-ink/70">{thread.snippet}</p>
-                </div>
-              ))}
+          <div className="mt-8">
+            <h2 className="font-display text-xl mb-3">Recent activity</h2>
+            <div className="border border-line rounded-2xl p-5 bg-cream text-sm text-ink/60">
+              Activity feed coming soon.
             </div>
           </div>
         </div>
