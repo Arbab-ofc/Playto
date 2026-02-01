@@ -8,7 +8,7 @@ export const Profile = () => {
   return (
     <div className="min-h-screen canvas-bg text-ink relative overflow-hidden">
       <svg
-        className="absolute left-0 top-24 hidden lg:block"
+        className="absolute left-0 top-24 hidden lg:block -z-10 pointer-events-none"
         width="420"
         height="240"
         viewBox="0 0 420 240"
@@ -22,7 +22,7 @@ export const Profile = () => {
         />
       </svg>
       <svg
-        className="absolute right-0 top-32 hidden lg:block"
+        className="absolute right-0 top-32 hidden lg:block -z-10 pointer-events-none"
         width="340"
         height="280"
         viewBox="0 0 340 280"
