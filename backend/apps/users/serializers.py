@@ -23,7 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'password', 'full_name']
 
     def validate_password(self, value):
-        pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$'
+        pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$'
         if not re.match(pattern, value):
             raise serializers.ValidationError(
                 'Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.'
