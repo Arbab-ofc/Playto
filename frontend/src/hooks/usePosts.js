@@ -50,3 +50,14 @@ export const useTogglePostLike = () => {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['posts'] })
   });
 };
+
+export const useUserPosts = (userId) => {
+  return useQuery({
+    queryKey: ['posts', 'user', userId],
+    queryFn: async () => {
+      const { data } = await api.get('/posts/', { params: { author: userId } });
+      return data;
+    },
+    enabled: Boolean(userId)
+  });
+};

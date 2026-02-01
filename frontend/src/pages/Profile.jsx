@@ -1,9 +1,24 @@
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { useUserPosts } from '../hooks/usePosts';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
+import { formatDate } from '../utils/formatDate';
 
 export const Profile = () => {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
+  const { data } = useUserPosts(user?.id);
+  const posts = data?.results || data || [];
+  const [editing, setEditing] = useState(false);
+  const [bio, setBio] = useState(user?.bio || '');
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    await updateProfile({ bio });
+    setSaving(false);
+    setEditing(false);
+  };
 
   return (
     <div className="min-h-screen canvas-bg text-ink relative overflow-hidden">
@@ -49,10 +64,10 @@ export const Profile = () => {
                   </h1>
                   <p className="text-sm text-ink/60 mt-2">{user?.email || 'No email on file'}</p>
                 </div>
-            <div className="text-right">
-              <p className="text-xs uppercase tracking-[0.2em] text-ink/60">First name</p>
-              <p className="font-display text-2xl mt-2">{user?.first_name || 'Guest'}</p>
-            </div>
+                <div className="text-right">
+                  <p className="text-xs uppercase tracking-[0.2em] text-ink/60">First name</p>
+                  <p className="font-display text-2xl mt-2">{user?.first_name || 'Guest'}</p>
+                </div>
               </div>
 
               <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -71,10 +86,35 @@ export const Profile = () => {
               </div>
 
               <div className="mt-8 border border-line rounded-2xl p-6 bg-cream">
-                <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Bio</p>
-                <p className="text-sm text-ink/70 mt-2">
-                  Curating thoughtful updates and meaningful replies. Keep the feed warm and intentional.
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Bio</p>
+                  <button
+                    className="text-xs uppercase tracking-[0.2em] text-ink/60 hover:text-ink"
+                    onClick={() => setEditing((prev) => !prev)}
+                  >
+                    {editing ? 'Cancel' : 'Edit'}
+                  </button>
+                </div>
+                {editing ? (
+                  <div className="mt-3 space-y-3">
+                    <textarea
+                      className="w-full min-h-[120px] bg-cream border border-line rounded-xl px-3 py-2 text-sm"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                    />
+                    <button
+                      className="px-4 py-2 rounded-full bg-ink text-cream text-xs uppercase tracking-[0.3em]"
+                      onClick={handleSave}
+                      disabled={saving}
+                    >
+                      {saving ? 'Saving...' : 'Save'}
+                    </button>
+                  </div>
+                ) : (
+                  <p className="text-sm text-ink/70 mt-2">
+                    {user?.bio || 'Add a short bio about yourself.'}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -99,9 +139,20 @@ export const Profile = () => {
               </div>
 
               <div className="phone-frame p-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-ink/60">Recent activity</p>
-                <div className="mt-4 border border-line rounded-2xl p-5 bg-cream text-sm text-ink/60">
-                  Activity feed coming soon.
+                <p className="text-xs uppercase tracking-[0.3em] text-ink/60">Your posts</p>
+                <div className="mt-4 space-y-3">
+                  {posts.length ? (
+                    posts.map((post) => (
+                      <div key={post.id} className="border border-line rounded-2xl p-4 bg-cream">
+                        <p className="text-xs text-ink/60">{formatDate(post.created_at)}</p>
+                        <p className="text-sm text-ink/70 mt-2">{post.content}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="border border-line rounded-2xl p-4 bg-cream text-sm text-ink/60">
+                      No posts yet.
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

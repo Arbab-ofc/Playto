@@ -18,6 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'email',
             'first_name',
+            'bio',
             'created_at',
             'total_karma',
             'karma_last_24h',
@@ -30,6 +31,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_total_comments(self, obj):
         return obj.comments.count()
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'bio']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

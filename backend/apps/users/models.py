@@ -9,6 +9,7 @@ class User(AbstractUser):
     username = models.CharField(unique=True, max_length=150)
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    bio = models.TextField(blank=True, default='')
 
     @property
     def total_karma(self):

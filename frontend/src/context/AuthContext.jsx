@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { getAccessToken, getMe, login as loginRequest, logout as logoutRequest, register as registerRequest } from '../services/auth';
+import { getAccessToken, getMe, login as loginRequest, logout as logoutRequest, register as registerRequest, updateMe } from '../services/auth';
 
 const AuthContext = createContext(null);
 
@@ -41,6 +41,12 @@ export const AuthProvider = ({ children }) => {
     return login({ username: payload.username, password: payload.password });
   };
 
+  const updateProfile = async (payload) => {
+    const updated = await updateMe(payload);
+    setUser(updated);
+    return updated;
+  };
+
   const logout = async () => {
     try {
       await logoutRequest();
@@ -56,6 +62,7 @@ export const AuthProvider = ({ children }) => {
       isAuthenticated: Boolean(user),
       login,
       register,
+      updateProfile,
       logout
     }),
     [user, loading]

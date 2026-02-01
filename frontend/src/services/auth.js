@@ -36,3 +36,8 @@ export const getMe = async () => {
 };
 
 export const getAccessToken = () => localStorage.getItem('access');
+
+export const updateMe = async (payload) => {
+  const { data } = await api.patch('/auth/me/', payload);
+  return data;
+};
