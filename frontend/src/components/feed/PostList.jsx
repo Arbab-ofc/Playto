@@ -19,20 +19,16 @@ export const PostList = () => {
             transition={{ duration: 0.25 }}
             className="space-y-4"
           >
-            {[0, 1, 2].map((item) => (
-              <div key={item} className="phone-frame p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="h-3 w-24 bg-line/60 rounded-full animate-pulse" />
-                  <div className="h-3 w-16 bg-line/60 rounded-full animate-pulse" />
-                </div>
-                <div className="space-y-2">
-                  <div className="h-3 w-full bg-line/60 rounded-full animate-pulse" />
-                  <div className="h-3 w-5/6 bg-line/60 rounded-full animate-pulse" />
-                  <div className="h-3 w-2/3 bg-line/60 rounded-full animate-pulse" />
-                </div>
-                <div className="mt-4 h-3 w-12 bg-line/60 rounded-full animate-pulse" />
+            <div className="phone-frame p-5">
+              <div className="flex items-center justify-between mb-3">
+                <div className="h-3 w-24 bg-line/60 rounded-full animate-pulse" />
+                <div className="h-3 w-16 bg-line/60 rounded-full animate-pulse" />
               </div>
-            ))}
+              <div className="space-y-2">
+                <div className="h-3 w-full bg-line/60 rounded-full animate-pulse" />
+                <div className="h-3 w-5/6 bg-line/60 rounded-full animate-pulse" />
+              </div>
+            </div>
           </motion.div>
         ) : posts.length ? (
           <motion.div
