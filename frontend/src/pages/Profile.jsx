@@ -88,11 +88,11 @@ export const Profile = () => {
                 <div className="mt-6 space-y-3">
                   <div className="flex items-center justify-between border border-line rounded-2xl px-4 py-3 bg-cream">
                     <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Threads started</span>
-                    <span className="text-sm font-semibold">12</span>
+                    <span className="text-sm font-semibold">{user?.total_posts ?? 0}</span>
                   </div>
                   <div className="flex items-center justify-between border border-line rounded-2xl px-4 py-3 bg-cream">
                     <span className="text-xs uppercase tracking-[0.2em] text-ink/60">Replies sent</span>
-                    <span className="text-sm font-semibold">34</span>
+                    <span className="text-sm font-semibold">{user?.total_comments ?? 0}</span>
                   </div>
                 </div>
               </div>

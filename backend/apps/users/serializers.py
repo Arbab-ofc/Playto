@@ -8,10 +8,27 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     total_karma = serializers.IntegerField(read_only=True)
     karma_last_24h = serializers.IntegerField(read_only=True)
+    total_posts = serializers.SerializerMethodField()
+    total_comments = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'created_at', 'total_karma', 'karma_last_24h']
+        fields = [
+            'id',
+            'username',
+            'email',
+            'created_at',
+            'total_karma',
+            'karma_last_24h',
+            'total_posts',
+            'total_comments',
+        ]
+
+    def get_total_posts(self, obj):
+        return obj.posts.count()
+
+    def get_total_comments(self, obj):
+        return obj.comments.count()
 
 
 class RegisterSerializer(serializers.ModelSerializer):
