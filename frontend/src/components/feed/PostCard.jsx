@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
 import { useTogglePostLike } from '../../hooks/usePosts';
+import { useAuth } from '../../hooks/useAuth';
+import { CommentForm } from '../comments/CommentForm';
 
 export const PostCard = ({ post }) => {
   const toggleLike = useTogglePostLike();
+  const { isAuthenticated } = useAuth();
 
   return (
     <motion.div
@@ -24,6 +28,19 @@ export const PostCard = ({ post }) => {
         <Heart size={14} />
         <span>{post.like_count}</span>
       </button>
+
+      <div className="mt-4 border-t border-line/60 pt-4">
+        {isAuthenticated ? (
+          <CommentForm postId={post.id} />
+        ) : (
+          <p className="text-xs text-ink/60">
+            <Link to="/login" className="underline text-ink">
+              Sign in
+            </Link>{' '}
+            to add a comment.
+          </p>
+        )}
+      </div>
     </motion.div>
   );
 };
