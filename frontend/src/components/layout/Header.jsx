@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,18 +23,12 @@ export const Header = () => {
             {isAuthenticated && (
               <a href="/profile" className="nav-link hover:text-ink transition-colors">Profile</a>
             )}
-            <button
-              onClick={toggleTheme}
-              className="nav-link hover:text-ink transition-colors"
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              {theme === 'dark' ? 'Light' : 'Dark'}
-            </button>
             {isAuthenticated ? (
               <button onClick={logout} className="nav-link hover:text-ink transition-colors">Logout</button>
             ) : (
               <a href="/login" className="nav-link hover:text-ink transition-colors">Login</a>
             )}
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
           </div>
 
           <button
@@ -94,15 +89,6 @@ export const Header = () => {
                     Profile
                   </a>
                 )}
-                <button
-                  className="nav-link block hover:text-ink text-left w-full"
-                  onClick={() => {
-                    toggleTheme();
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  {theme === 'dark' ? 'Light' : 'Dark'} mode
-                </button>
                 {isAuthenticated ? (
                   <button
                     className="nav-link block hover:text-ink text-left w-full"
@@ -114,12 +100,20 @@ export const Header = () => {
                     Logout
                   </button>
                 ) : (
-                  <a href="/login" className="block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
+                  <a href="/login" className="nav-link block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
                     Login
                   </a>
                 )}
+                <div className="pt-2">
+                  <ThemeToggle
+                    theme={theme}
+                    onToggle={() => {
+                      toggleTheme();
+                      setIsMenuOpen(false);
+                    }}
+                  />
+                </div>
               </div>
-
             </motion.aside>
           </motion.div>
         )}

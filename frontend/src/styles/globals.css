@@ -70,6 +70,11 @@ body {
   background-color: #1b1f2b !important;
 }
 
+.dark .bg-ink {
+  background-color: #f0ede6 !important;
+  color: #111317 !important;
+}
+
 .dark input,
 .dark textarea {
   background-color: #151822;
