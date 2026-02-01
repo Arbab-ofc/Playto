@@ -54,14 +54,7 @@ export const PostCard = ({ post }) => {
       <div className="mt-4 border-t border-line/60 pt-4">
         {isAuthenticated ? (
           <CommentForm postId={post.id} />
-        ) : (
-          <p className="text-xs text-ink/60">
-            <Link to="/login" className="underline text-ink">
-              Sign in
-            </Link>{' '}
-            to add a comment.
-          </p>
-        )}
+        ) : null}
       </div>
 
       <PostDetailDrawer post={post} isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
