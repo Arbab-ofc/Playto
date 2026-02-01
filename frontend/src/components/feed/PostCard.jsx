@@ -5,6 +5,7 @@ import { formatDate } from '../../utils/formatDate';
 import { useTogglePostLike } from '../../hooks/usePosts';
 import { useAuth } from '../../hooks/useAuth';
 import { CommentForm } from '../comments/CommentForm';
+import { buildCommentTree } from '../../utils/buildCommentTree';
 
 export const PostCard = ({ post }) => {
   const toggleLike = useTogglePostLike();
@@ -28,6 +29,24 @@ export const PostCard = ({ post }) => {
         <Heart size={14} />
         <span>{post.like_count}</span>
       </button>
+
+      {Array.isArray(post.comments) && post.comments.length > 0 && (
+        <div className="mt-4 space-y-3">
+          {buildCommentTree(post.comments)
+            .slice(0, 3)
+            .map((comment) => (
+              <div key={comment.id} className="border border-line rounded-2xl p-3 bg-cream">
+                <p className="text-xs uppercase tracking-[0.2em] text-ink/60">
+                  {comment.author_username}
+                </p>
+                <p className="text-sm text-ink/70 mt-2">{comment.content}</p>
+              </div>
+            ))}
+          {post.comments.length > 3 && (
+            <p className="text-xs text-ink/60">More comments available...</p>
+          )}
+        </div>
+      )}
 
       <div className="mt-4 border-t border-line/60 pt-4">
         {isAuthenticated ? (

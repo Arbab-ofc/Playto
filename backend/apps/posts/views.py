@@ -13,7 +13,9 @@ logger = logging.getLogger('playto')
 
 
 class PostListCreateView(generics.ListCreateAPIView):
-    queryset = Post.objects.select_related('author').all()
+    queryset = Post.objects.select_related('author').prefetch_related(
+        Prefetch('comments', queryset=Comment.objects.select_related('author').order_by('tree_id', 'lft'))
+    )
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
