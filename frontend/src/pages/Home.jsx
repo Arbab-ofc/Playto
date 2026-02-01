@@ -2,8 +2,8 @@ import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { Sidebar } from '../components/layout/Sidebar';
 import { CreatePost } from '../components/feed/CreatePost';
-import { AuthGate } from '../components/auth/AuthGate';
 import { PostList } from '../components/feed/PostList';
+import { AuthGate } from '../components/auth/AuthGate';
 
 export const Home = () => {
   return (
@@ -40,40 +40,60 @@ export const Home = () => {
       <Header />
 
       <main className="container mx-auto px-4 pb-16">
-        <section className="text-center mb-12">
-          <p className="text-xs uppercase tracking-[0.4em] text-ink/60">Community feed</p>
-          <h1 className="font-display text-4xl md:text-5xl mt-4">Threaded stories with a soft, tactile rhythm</h1>
-          <p className="text-ink/70 mt-4 max-w-2xl mx-auto">
-            Post, reply, and climb the leaderboard. Inspired by the calm flow of booking interfaces,
-            Playto keeps conversation focused and elegant.
-          </p>
+        <section className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 items-center mb-12">
+          <div>
+            <p className="text-xs uppercase tracking-[0.4em] text-ink/60">Community feed</p>
+            <h1 className="font-display text-4xl md:text-5xl mt-4">
+              Curated moments, threaded with care.
+            </h1>
+            <p className="text-ink/70 mt-4 max-w-xl">
+              Playto captures short-form updates and the reply trails that matter. Move fast, stay thoughtful,
+              and climb the 24-hour leaderboard.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3 text-xs uppercase tracking-[0.3em]">
+              <span className="px-4 py-2 rounded-full border border-line bg-cream">Realtime karma</span>
+              <span className="px-4 py-2 rounded-full border border-line bg-cream">Threaded replies</span>
+              <span className="px-4 py-2 rounded-full border border-line bg-cream">Daily leaderboard</span>
+            </div>
+          </div>
+          <div className="phone-frame p-6">
+            <div className="border border-line rounded-2xl p-5 bg-cream">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Quick snapshot</p>
+              <h2 className="font-display text-2xl mt-3">Top momentum</h2>
+              <p className="text-sm text-ink/70 mt-2">
+                Watch the leaderboard update in real time as fresh conversations land.
+              </p>
+            </div>
+            <div className="mt-4 border border-line rounded-2xl p-5 bg-cream">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Create</p>
+              <p className="text-sm text-ink/70 mt-2">
+                Post something short. Let the replies build the story.
+              </p>
+            </div>
+          </div>
         </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
           <section className="space-y-6">
             <AuthGate>
               <CreatePost />
             </AuthGate>
             <div className="phone-frame p-6">
-              <h3 className="font-display text-xl mb-2">Add context</h3>
-              <p className="text-sm text-ink/70">
-                Keep every post clear and lightweight. Let replies carry the story forward.
-              </p>
-            </div>
-          </section>
-
-          <section className="space-y-6">
-            <div className="phone-frame p-6">
-              <h3 className="font-display text-xl mb-3">Latest posts</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-display text-xl">Latest posts</h3>
+                <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Live</p>
+              </div>
               <PostList />
             </div>
           </section>
 
-          <section className="space-y-6" id="profile">
+          <section className="space-y-6">
             <Sidebar />
             <div className="phone-frame p-6">
-              <h3 className="font-display text-xl mb-2">Progress</h3>
-              <p className="text-sm text-ink/70">Earn karma by contributing thoughtful takes and replies.</p>
+              <h3 className="font-display text-xl mb-2">Community notes</h3>
+              <p className="text-sm text-ink/70">
+                Keep posts concise and meaningful. Replies are where the depth lives.
+              </p>
             </div>
           </section>
         </div>
