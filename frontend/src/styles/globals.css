@@ -37,6 +37,48 @@ body {
   color: #f0ede6;
 }
 
+.dark .text-ink {
+  color: #f0ede6 !important;
+}
+
+.dark .text-ink\/60 {
+  color: rgba(240, 237, 230, 0.6) !important;
+}
+
+.dark .text-ink\/70 {
+  color: rgba(240, 237, 230, 0.7) !important;
+}
+
+.dark .text-ink\/90 {
+  color: rgba(240, 237, 230, 0.9) !important;
+}
+
+.dark .bg-ink {
+  background-color: #f0ede6 !important;
+  color: #111317 !important;
+}
+
+.dark .border-line {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.dark .bg-cream {
+  background-color: #1b1f2b !important;
+}
+
+.dark input,
+.dark textarea {
+  background-color: #151822;
+  color: #f0ede6;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark .phone-frame {
+  background-color: #151822;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+}
+
 .dark .canvas-bg {
   position: relative;
   background: radial-gradient(circle at 30% 20%, rgba(255, 217, 140, 0.08), transparent 40%),
@@ -55,22 +97,8 @@ body {
   mix-blend-mode: soft-light;
 }
 
-.dark .phone-frame {
-  background-color: #151822;
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
-}
-
 .dark .ink-line {
   stroke: rgba(255, 255, 255, 0.2);
-}
-
-.dark .border-line {
-  border-color: rgba(255, 255, 255, 0.12) !important;
-}
-
-.dark .bg-cream {
-  background-color: #1b1f2b !important;
 }
 
 .canvas-bg {
