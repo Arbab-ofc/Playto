@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { useCreatePost } from '../../hooks/usePosts';
+import { useAnon } from '../../context/AnonContext';
 
 export const CreatePost = () => {
   const [content, setContent] = useState('');
   const createPost = useCreatePost();
+  const { anonymous } = useAnon();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!content.trim()) return;
-    createPost.mutate({ content });
+    createPost.mutate({ content, is_anonymous: anonymous });
     setContent('');
   };
 

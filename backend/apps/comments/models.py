@@ -12,6 +12,7 @@ class Comment(MPTTModel):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     like_count = models.IntegerField(default=0)
+    is_anonymous = models.BooleanField(default=False, db_index=True)
     lft = models.PositiveIntegerField(db_index=True, editable=False)
     rght = models.PositiveIntegerField(db_index=True, editable=False)
     tree_id = models.PositiveIntegerField(db_index=True, editable=False)

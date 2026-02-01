@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { useCreateComment } from '../../hooks/useComments';
+import { useAnon } from '../../context/AnonContext';
 
 export const CommentForm = ({ postId, parentId = null }) => {
   const [content, setContent] = useState('');
   const createComment = useCreateComment();
+  const { anonymous } = useAnon();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!content.trim()) return;
-    createComment.mutate({ post: postId, parent_id: parentId, content });
+    createComment.mutate({ post: postId, parent_id: parentId, content, is_anonymous: anonymous });
     setContent('');
   };
 

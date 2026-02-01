@@ -25,7 +25,7 @@ class PostListCreateView(generics.ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        serializer.save(author=self.request.user, is_anonymous=bool(self.request.data.get('is_anonymous')))
 
 
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):

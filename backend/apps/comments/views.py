@@ -12,7 +12,7 @@ class CommentListCreateView(generics.ListCreateAPIView):
     serializer_class = CommentFlatSerializer
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        serializer.save(author=self.request.user, is_anonymous=bool(self.request.data.get('is_anonymous')))
 
 
 class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):

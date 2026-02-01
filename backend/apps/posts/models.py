@@ -8,6 +8,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
     like_count = models.IntegerField(default=0, db_index=True)
+    is_anonymous = models.BooleanField(default=False, db_index=True)
 
     class Meta:
         ordering = ['-created_at']

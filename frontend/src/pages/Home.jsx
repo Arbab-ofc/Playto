@@ -4,6 +4,7 @@ import { Sidebar } from '../components/layout/Sidebar';
 import { CreatePost } from '../components/feed/CreatePost';
 import { PostList } from '../components/feed/PostList';
 import { AuthGate } from '../components/auth/AuthGate';
+import { AnonymousToggle } from '../components/feed/AnonymousToggle';
 
 export const Home = () => {
   return (
@@ -77,7 +78,10 @@ export const Home = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
           <section className="space-y-6">
             <AuthGate>
-              <CreatePost />
+              <>
+                <AnonymousToggle />
+                <CreatePost />
+              </>
             </AuthGate>
             <div className="phone-frame p-6">
               <div className="flex items-center justify-between mb-4">

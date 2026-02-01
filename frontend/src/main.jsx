@@ -5,6 +5,7 @@ import App from './App.jsx';
 import './styles/globals.css';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import { AnonProvider } from './context/AnonContext.jsx';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ThemeProvider>
-          <App />
+          <AnonProvider>
+            <App />
+          </AnonProvider>
         </ThemeProvider>
       </AuthProvider>
     </QueryClientProvider>
