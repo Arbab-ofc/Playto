@@ -8,12 +8,12 @@ export const Header = () => {
     <header className="py-8 relative z-20">
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <a href="/" className="flex items-center space-x-3">
             <div className="w-9 h-9 rounded-full border border-line flex items-center justify-center font-display text-lg">
               P
             </div>
             <span className="font-display text-2xl">Playto</span>
-          </div>
+          </a>
 
           <div className="hidden lg:flex items-center space-x-6 text-sm uppercase tracking-[0.2em] text-ink/70">
             <a href="/" className="hover:text-ink transition-colors">Feed</a>
