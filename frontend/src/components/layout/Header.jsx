@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../../hooks/useAuth';
+import { useTheme } from '../../hooks/useTheme';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="py-8 relative z-20">
@@ -20,6 +22,13 @@ export const Header = () => {
             {isAuthenticated && (
               <a href="/profile" className="hover:text-ink transition-colors">Profile</a>
             )}
+            <button
+              onClick={toggleTheme}
+              className="hover:text-ink transition-colors"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === 'dark' ? 'Light' : 'Dark'}
+            </button>
             {isAuthenticated ? (
               <button onClick={logout} className="hover:text-ink transition-colors">Logout</button>
             ) : (
@@ -85,6 +94,15 @@ export const Header = () => {
                     Profile
                   </a>
                 )}
+                <button
+                  className="block hover:text-ink text-left w-full"
+                  onClick={() => {
+                    toggleTheme();
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  {theme === 'dark' ? 'Light' : 'Dark'} mode
+                </button>
                 {isAuthenticated ? (
                   <button
                     className="block hover:text-ink text-left w-full"
