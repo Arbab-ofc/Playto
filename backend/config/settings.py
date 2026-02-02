@@ -2,6 +2,11 @@ from pathlib import Path
 import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_DIR = BASE_DIR / 'logs'
+try:
+    LOG_DIR.mkdir(exist_ok=True)
+except OSError:
+    pass
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -137,7 +142,7 @@ LOGGING = {
         },
         'file': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': str(BASE_DIR / 'logs' / 'playto.log'),
+            'filename': str(LOG_DIR / 'playto.log'),
             'maxBytes': 1024 * 1024 * 10,
             'backupCount': 5,
             'formatter': 'json',
