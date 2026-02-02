@@ -52,7 +52,7 @@ Playto’s flow is simple: anyone can explore the feed and leaderboard, and logg
 
 The UI is intentionally “soft and tactile,” with card-like surfaces, subtle shadows, and a warm palette in light mode. Dark mode adds a textured noise layer and soft glows to keep the experience atmospheric. Profiles show a member’s public footprint (karma, recent momentum, total post likes, and posts list) while private profiles allow bio edits and personal stats.
 
-Playto is designed for performance and clarity: posts are cached, leaderboard data is cached, and the UI relies on React Query + infinite scrolling for smooth browsing. Mentions (`@username`) are linkified and supported by autocomplete to quickly route conversations to the right people.
+Playto is designed for performance and clarity: public post lists are cached, leaderboard data is cached, and the UI relies on React Query + infinite scrolling for smooth browsing. Authenticated feeds are always fresh so liked state stays accurate. Mentions (`@username`) are linkified and supported by autocomplete to quickly route conversations to the right people.
 
 ---
 
@@ -81,7 +81,7 @@ Playto is designed for performance and clarity: posts are cached, leaderboard da
 - Threaded comments with nested replies (up to 50 levels)
 - Bottom-sheet post detail view with full comment tree
 - Like system with karma tracking
-- Like/unlike toggle with immediate UI refresh
+- Like/unlike toggle with optimistic UI refresh and persistent liked state
 - 24-hour leaderboard (cached)
 - Anonymous mode for logged-in users
 - Public profiles with posts list and stats
@@ -154,7 +154,7 @@ Auth
 
 Posts
 
-- `GET /api/posts/` - List posts (paginated, cached)
+- `GET /api/posts/` - List posts (paginated, cached for public users)
 - `POST /api/posts/` - Create a post
 - `GET /api/posts/<id>/` - Post detail
 - `PATCH /api/posts/<id>/` - Update a post (owner)

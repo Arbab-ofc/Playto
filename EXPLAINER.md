@@ -29,7 +29,7 @@ Likes are protected against race conditions using:
 - unique constraints
 - atomic transactions
 - F() expressions
-The like endpoint is a toggle (like/unlike) and returns the action plus updated like count.
+The like endpoint is a toggle (like/unlike) and returns the action plus updated like count. Authenticated list responses include `liked_by_me` for immediate UI state.
 
 ## Anonymous Mode
 Logged‑in users can toggle anonymous mode:
@@ -39,7 +39,7 @@ Logged‑in users can toggle anonymous mode:
 
 ## Posts & Comments API
 Key endpoints:
-- `GET /api/posts/` (public, cached)
+- `GET /api/posts/` (public cached; authenticated responses are not cached)
 - `POST /api/posts/` (auth, supports `is_anonymous`)
 - `POST /api/comments/` (auth, supports `is_anonymous`)
 - `GET /api/leaderboard/`
@@ -73,7 +73,7 @@ Public profile shows:
 - User posts list
 
 ## Caching
-- Posts list cached for 30 seconds.
+- Public posts list cached for 30 seconds; authenticated responses are uncached to preserve `liked_by_me`.
 - Leaderboard cached for 60 seconds.
 - Cache is invalidated on post, comment, and like/unlike writes to keep lists fresh.
 
