@@ -23,7 +23,7 @@ export const Header = () => {
               <a href="/profile" className="nav-link hover:text-ink transition-colors">Profile</a>
             )}
             {isAuthenticated ? (
-              <button onClick={logout} className="nav-link hover:text-ink transition-colors">Logout</button>
+              <button onClick={logout} className="nav-link hover:text-ink transition-colors">LOGOUT</button>
             ) : (
               <a href="/login" className="nav-link hover:text-ink transition-colors">Login</a>
             )}
@@ -93,7 +93,7 @@ export const Header = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    Logout
+                    LOGOUT
                   </button>
                 ) : (
                   <a href="/login" className="nav-link block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
