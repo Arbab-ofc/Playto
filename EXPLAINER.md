@@ -29,6 +29,7 @@ Likes are protected against race conditions using:
 - unique constraints
 - atomic transactions
 - F() expressions
+The like endpoint is a toggle (like/unlike) and returns the action plus updated like count.
 
 ## Anonymous Mode
 Logged‑in users can toggle anonymous mode:
@@ -74,6 +75,7 @@ Public profile shows:
 ## Caching
 - Posts list cached for 30 seconds.
 - Leaderboard cached for 60 seconds.
+- Cache is invalidated on post, comment, and like/unlike writes to keep lists fresh.
 
 ## Security & Access
 - JWT authentication

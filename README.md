@@ -81,6 +81,7 @@ Playto is designed for performance and clarity: posts are cached, leaderboard da
 - Threaded comments with nested replies (up to 50 levels)
 - Bottom-sheet post detail view with full comment tree
 - Like system with karma tracking
+- Like/unlike toggle with immediate UI refresh
 - 24-hour leaderboard (cached)
 - Anonymous mode for logged-in users
 - Public profiles with posts list and stats
@@ -312,6 +313,7 @@ npm test -- --coverage
 
 - N+1 query prevention with `select_related()` and `prefetch_related()`
 - Redis caching for posts list (30s) and leaderboard (60s)
+- Cache busting on post/comment/like writes to avoid stale lists
 - Atomic transactions for like operations
 - React Query caching and pagination
 
