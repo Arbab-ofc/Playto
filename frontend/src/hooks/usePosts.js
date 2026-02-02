@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../services/api';
+import { useAuth } from './useAuth';
 
 const updatePostInPage = (page, postId, updater) => {
   if (!page || !Array.isArray(page.results)) return page;
@@ -28,31 +29,42 @@ const updatePostInQueryData = (data, postId, updater) => {
 };
 
 export const usePosts = () => {
+  const { user, isAuthenticated, loading } = useAuth();
+  const authKey = isAuthenticated ? `auth-${user?.id ?? 'me'}` : 'anon';
   return useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['posts', authKey],
     queryFn: async ({ pageParam = 1 }) => {
       const { data } = await api.get('/posts/', { params: { page: pageParam } });
       return data;
     },
+    enabled: !loading,
     getNextPageParam: (lastPage) => {
       if (!lastPage?.next) return undefined;
       const nextUrl = new URL(lastPage.next);
       const nextPage = Number(nextUrl.searchParams.get('page'));
       return Number.isNaN(nextPage) ? undefined : nextPage;
     },
-    keepPreviousData: true
+    keepPreviousData: true,
+    staleTime: 30000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
   });
 };
 
 export const usePost = (id, options = {}) => {
   const { enabled = true, ...rest } = options;
+  const { user, isAuthenticated, loading } = useAuth();
+  const authKey = isAuthenticated ? `auth-${user?.id ?? 'me'}` : 'anon';
   return useQuery({
-    queryKey: ['posts', id],
+    queryKey: ['posts', id, authKey],
     queryFn: async () => {
       const { data } = await api.get(`/posts/${id}/`);
       return data;
     },
-    enabled: Boolean(id) && enabled,
+    enabled: Boolean(id) && enabled && !loading,
+    staleTime: 30000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
     ...rest
   });
 };
@@ -114,30 +126,40 @@ export const useTogglePostLike = () => {
 };
 
 export const useUserPosts = (userId) => {
+  const { user, isAuthenticated, loading } = useAuth();
+  const authKey = isAuthenticated ? `auth-${user?.id ?? 'me'}` : 'anon';
   return useQuery({
-    queryKey: ['posts', 'user', userId],
+    queryKey: ['posts', 'user', userId, authKey],
     queryFn: async () => {
       const { data } = await api.get('/posts/', { params: { author: userId } });
       return data;
     },
-    enabled: Boolean(userId)
+    enabled: Boolean(userId) && !loading,
+    staleTime: 30000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
   });
 };
 
 export const useUserPostsInfinite = (userId) => {
+  const { user, isAuthenticated, loading } = useAuth();
+  const authKey = isAuthenticated ? `auth-${user?.id ?? 'me'}` : 'anon';
   return useInfiniteQuery({
-    queryKey: ['posts', 'user', userId, 'infinite'],
+    queryKey: ['posts', 'user', userId, 'infinite', authKey],
     queryFn: async ({ pageParam = 1 }) => {
       const { data } = await api.get('/posts/', { params: { author: userId, page: pageParam } });
       return data;
     },
-    enabled: Boolean(userId),
+    enabled: Boolean(userId) && !loading,
     getNextPageParam: (lastPage) => {
       if (!lastPage?.next) return undefined;
       const nextUrl = new URL(lastPage.next);
       const nextPage = Number(nextUrl.searchParams.get('page'));
       return Number.isNaN(nextPage) ? undefined : nextPage;
     },
-    keepPreviousData: true
+    keepPreviousData: true,
+    staleTime: 30000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false
   });
 };
