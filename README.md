@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/Arbab-ofc/Playto">
-    <img src="https://readme-typing-svg.demolab.com?font=Playfair+Display&size=30&duration=3000&pause=600&color=1F1E1C&center=true&vCenter=true&width=680&lines=Playto+-+Community+Feed;Threaded+Replies+%7C+Anonymous+Mode;24h+Leaderboard+%7C+Karma+Points" alt="Playto animated header" />
+    <img src="https://readme-typing-svg.demolab.com?font=Playfair+Display&size=30&duration=3000&pause=600&color=F0EDE6&center=true&vCenter=true&width=680&lines=Playto+-+Community+Feed;Threaded+Replies+%7C+Anonymous+Mode;24h+Leaderboard+%7C+Karma+Points" alt="Playto animated header" />
   </a>
 </p>
 
