@@ -25,7 +25,7 @@ export const Header = () => {
             {isAuthenticated ? (
               <button onClick={logout} className="nav-link hover:text-ink transition-colors">LOGOUT</button>
             ) : (
-              <a href="/login" className="nav-link hover:text-ink transition-colors">Login</a>
+              <a href="/login" className="nav-link hover:text-ink transition-colors">LOGIN</a>
             )}
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
           </div>
@@ -97,7 +97,7 @@ export const Header = () => {
                   </button>
                 ) : (
                   <a href="/login" className="nav-link block hover:text-ink" onClick={() => setIsMenuOpen(false)}>
-                    Login
+                    LOGIN
                   </a>
                 )}
                 <div className="pt-2">
