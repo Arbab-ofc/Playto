@@ -114,5 +114,4 @@ class PostLikeToggleView(APIView):
 
     def post(self, request, pk):
         result = toggle_like(request.user, 'post', pk)
-        post = Post.objects.get(id=pk)
-        return Response({'action': result['action'], 'like_count': post.like_count})
+        return Response({'action': result['action'], 'like_count': result['like_count']})
