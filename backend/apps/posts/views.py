@@ -1,6 +1,5 @@
 import logging
 from django.db.models import BooleanField, Exists, OuterRef, Prefetch, Value
-from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework import generics, permissions
 from rest_framework.response import Response
@@ -51,9 +50,10 @@ class PostListCreateView(generics.ListCreateAPIView):
         return queryset
     serializer_class = PostSerializer
 
-    @method_decorator(cache_page(30))
     def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return super().get(request, *args, **kwargs)
+        return cache_page(30)(super().get)(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, is_anonymous=bool(self.request.data.get('is_anonymous')))
