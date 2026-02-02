@@ -10,6 +10,7 @@ from apps.common.permissions import IsOwner
 from .models import Post
 from .serializers import PostSerializer, PostDetailSerializer
 from .services import toggle_like
+from .cache_utils import bust_posts_cache
 
 logger = logging.getLogger('playto')
 
@@ -31,6 +32,7 @@ class PostListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, is_anonymous=bool(self.request.data.get('is_anonymous')))
+        bust_posts_cache()
 
 
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from apps.karma.models import KarmaTransaction
 from apps.comments.models import Comment
 from .models import Post, Like
+from .cache_utils import bust_leaderboard_cache, bust_posts_cache
 
 
 @transaction.atomic
@@ -29,6 +30,8 @@ def toggle_like(user, content_type, object_id):
             related_like=like,
         )
 
+        bust_posts_cache()
+        bust_leaderboard_cache()
         return {'action': 'liked'}
     except IntegrityError:
         like = get_object_or_404(Like, user=user, content_type=content_type, object_id=object_id)
@@ -40,4 +43,6 @@ def toggle_like(user, content_type, object_id):
             Comment.objects.filter(id=object_id).update(like_count=F('like_count') - 1)
 
         like.delete()
+        bust_posts_cache()
+        bust_leaderboard_cache()
         return {'action': 'unliked'}

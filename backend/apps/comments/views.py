@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from apps.common.permissions import IsOwner
 from apps.posts.services import toggle_like
+from apps.posts.cache_utils import bust_posts_cache
 from .models import Comment
 from .serializers import CommentFlatSerializer
 
@@ -13,6 +14,7 @@ class CommentListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, is_anonymous=bool(self.request.data.get('is_anonymous')))
+        bust_posts_cache()
 
 
 class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
