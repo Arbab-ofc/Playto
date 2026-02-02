@@ -1,5 +1,6 @@
 import logging
 from django.db.models import BooleanField, Exists, OuterRef, Prefetch, Value
+from django.utils.cache import patch_cache_control, patch_vary_headers
 from django.views.decorators.cache import cache_page
 from rest_framework import generics, permissions
 from rest_framework.response import Response
@@ -52,7 +53,12 @@ class PostListCreateView(generics.ListCreateAPIView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return super().get(request, *args, **kwargs)
+            response = super().get(request, *args, **kwargs)
+            patch_cache_control(
+                response, private=True, no_cache=True, no_store=True, must_revalidate=True
+            )
+            patch_vary_headers(response, ['Authorization', 'Cookie'])
+            return response
         return cache_page(30)(super().get)(request, *args, **kwargs)
 
     def perform_create(self, serializer):
@@ -63,6 +69,15 @@ class PostListCreateView(generics.ListCreateAPIView):
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostDetailSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner]
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            patch_cache_control(
+                response, private=True, no_cache=True, no_store=True, must_revalidate=True
+            )
+            patch_vary_headers(response, ['Authorization', 'Cookie'])
+        return response
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
