@@ -8,6 +8,11 @@ api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    const method = config.method?.toLowerCase();
+    const url = config.url || '';
+    if (method === 'get' && url.startsWith('/posts')) {
+      config.params = { ...(config.params || {}), _ts: Date.now() };
+    }
   }
   return config;
 });
