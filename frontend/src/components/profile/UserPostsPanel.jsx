@@ -5,7 +5,7 @@ import { formatDate } from '../../utils/formatDate';
 
 const countReplies = (comments = []) => comments.filter((c) => c.parent_id !== null).length;
 
-export const UserPostsPanel = ({ userId }) => {
+export const UserPostsPanel = ({ userId, title = 'Your posts' }) => {
   const {
     data,
     isLoading,
@@ -37,7 +37,7 @@ export const UserPostsPanel = ({ userId }) => {
   return (
     <div className="phone-frame p-6">
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-[0.3em] text-ink/60">Your posts</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-ink/60">{title}</p>
         <span className="text-xs text-ink/60">{posts.length} loaded</span>
       </div>
 

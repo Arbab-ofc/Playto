@@ -23,3 +23,7 @@ class User(AbstractUser):
             .aggregate(total=Sum('amount'))['total']
             or 0
         )
+
+    @property
+    def total_post_likes(self):
+        return self.posts.aggregate(total=Sum('like_count'))['total'] or 0

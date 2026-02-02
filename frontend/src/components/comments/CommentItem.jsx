@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Heart, Reply } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
 import { useToggleCommentLike } from '../../hooks/useComments';
 import { CommentReply } from './CommentReply';
@@ -13,7 +14,14 @@ export const CommentItem = ({ comment, level, postId }) => {
   return (
     <div className="border border-line rounded-2xl p-4 bg-cream">
       <div className="text-xs text-ink/60 mb-2">
-        {comment.author_username} · {formatDate(comment.created_at)} · L{level}
+        {comment.is_anonymous ? (
+          'Anonymous'
+        ) : (
+          <Link to={`/u/${encodeURIComponent(comment.author_username)}`} className="hover:text-ink">
+            {comment.author_username}
+          </Link>
+        )}{' '}
+        · {formatDate(comment.created_at)} · L{level}
       </div>
       <p className="text-sm text-ink/70 mb-3">{comment.content}</p>
       <div className="flex items-center space-x-4 text-xs text-ink/70">

@@ -12,6 +12,7 @@ export const PostCard = ({ post }) => {
   const toggleLike = useTogglePostLike();
   const { isAuthenticated } = useAuth();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const isAnonymous = post.is_anonymous || post.author_username === 'Anonymous';
 
   return (
     <motion.div
@@ -21,7 +22,13 @@ export const PostCard = ({ post }) => {
       id={`post-${post.id}`}
     >
       <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-ink/60 mb-3">
-        <span>{post.author_username}</span>
+        {isAnonymous ? (
+          <span>Anonymous</span>
+        ) : (
+          <Link to={`/u/${encodeURIComponent(post.author_username)}`} className="hover:text-ink">
+            {post.author_username}
+          </Link>
+        )}
         <span>{formatDate(post.created_at)}</span>
       </div>
       <p className="text-sm leading-relaxed mb-4 text-ink/90">{post.content}</p>

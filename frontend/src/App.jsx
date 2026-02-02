@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
+import { PublicProfile } from './pages/PublicProfile';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { PostDetailPage } from './pages/PostDetailPage';
@@ -37,6 +38,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/u/:username" element={<PublicProfile />} />
       </Routes>
     </BrowserRouter>
   );

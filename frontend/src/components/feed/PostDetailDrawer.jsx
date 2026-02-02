@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { CommentTree } from '../comments/CommentTree';
 import { CommentForm } from '../comments/CommentForm';
 import { useAuth } from '../../hooks/useAuth';
 
 export const PostDetailDrawer = ({ post, isOpen, onClose }) => {
   const { isAuthenticated } = useAuth();
+  const isAnonymous = post.is_anonymous || post.author_username === 'Anonymous';
 
   useEffect(() => {
     if (!isOpen) return;
@@ -43,7 +45,15 @@ export const PostDetailDrawer = ({ post, isOpen, onClose }) => {
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Post details</p>
-                  <h3 className="font-display text-2xl mt-2">{post.author_username}</h3>
+                  <h3 className="font-display text-2xl mt-2">
+                    {isAnonymous ? (
+                      'Anonymous'
+                    ) : (
+                      <Link to={`/u/${encodeURIComponent(post.author_username)}`} className="hover:text-ink">
+                        {post.author_username}
+                      </Link>
+                    )}
+                  </h3>
                 </div>
                 <button
                   className="w-9 h-9 rounded-full border border-line flex items-center justify-center text-ink/70 hover:text-ink"
