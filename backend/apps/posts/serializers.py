@@ -5,6 +5,7 @@ from apps.comments.serializers import CommentFlatSerializer
 
 class PostSerializer(serializers.ModelSerializer):
     author_username = serializers.SerializerMethodField()
+    liked_by_me = serializers.BooleanField(read_only=True)
     comments = CommentFlatSerializer(many=True, read_only=True)
 
     class Meta:
@@ -17,10 +18,19 @@ class PostSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'like_count',
+            'liked_by_me',
             'is_anonymous',
             'comments',
         ]
-        read_only_fields = ['author', 'author_username', 'created_at', 'updated_at', 'like_count', 'comments']
+        read_only_fields = [
+            'author',
+            'author_username',
+            'created_at',
+            'updated_at',
+            'like_count',
+            'liked_by_me',
+            'comments',
+        ]
 
     def get_author_username(self, obj):
         return 'Anonymous' if obj.is_anonymous else obj.author.username
@@ -28,6 +38,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class PostDetailSerializer(serializers.ModelSerializer):
     author_username = serializers.SerializerMethodField()
+    liked_by_me = serializers.BooleanField(read_only=True)
     comments = CommentFlatSerializer(many=True, read_only=True)
 
     class Meta:
@@ -40,10 +51,19 @@ class PostDetailSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
             'like_count',
+            'liked_by_me',
             'is_anonymous',
             'comments',
         ]
-        read_only_fields = ['author', 'author_username', 'created_at', 'updated_at', 'like_count', 'comments']
+        read_only_fields = [
+            'author',
+            'author_username',
+            'created_at',
+            'updated_at',
+            'like_count',
+            'liked_by_me',
+            'comments',
+        ]
 
     def get_author_username(self, obj):
         return 'Anonymous' if obj.is_anonymous else obj.author.username

@@ -1,5 +1,5 @@
 import logging
-from django.db.models import Prefetch
+from django.db.models import BooleanField, Exists, OuterRef, Prefetch, Value
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework import generics, permissions
@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from apps.comments.models import Comment
 from apps.common.permissions import IsOwner
-from .models import Post
+from .models import Like, Post
 from .serializers import PostSerializer, PostDetailSerializer
 from .services import toggle_like
 from .cache_utils import bust_posts_cache
@@ -17,9 +17,34 @@ logger = logging.getLogger('playto')
 
 class PostListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
-        queryset = Post.objects.select_related('author').prefetch_related(
-            Prefetch('comments', queryset=Comment.objects.select_related('author').order_by('tree_id', 'lft'))
-        )
+        if self.request.user.is_authenticated:
+            post_like_subquery = Like.objects.filter(
+                user=self.request.user, content_type='post', object_id=OuterRef('pk')
+            )
+            comment_like_subquery = Like.objects.filter(
+                user=self.request.user, content_type='comment', object_id=OuterRef('pk')
+            )
+            comment_queryset = (
+                Comment.objects.select_related('author')
+                .annotate(liked_by_me=Exists(comment_like_subquery))
+                .order_by('tree_id', 'lft')
+            )
+            queryset = (
+                Post.objects.select_related('author')
+                .annotate(liked_by_me=Exists(post_like_subquery))
+                .prefetch_related(Prefetch('comments', queryset=comment_queryset))
+            )
+        else:
+            comment_queryset = (
+                Comment.objects.select_related('author')
+                .annotate(liked_by_me=Value(False, output_field=BooleanField()))
+                .order_by('tree_id', 'lft')
+            )
+            queryset = (
+                Post.objects.select_related('author')
+                .annotate(liked_by_me=Value(False, output_field=BooleanField()))
+                .prefetch_related(Prefetch('comments', queryset=comment_queryset))
+            )
         author_id = self.request.query_params.get('author')
         if author_id:
             queryset = queryset.filter(author_id=author_id)
@@ -40,8 +65,32 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner]
 
     def get_queryset(self):
-        return Post.objects.select_related('author').prefetch_related(
-            Prefetch('comments', queryset=Comment.objects.select_related('author').order_by('tree_id', 'lft'))
+        if self.request.user.is_authenticated:
+            post_like_subquery = Like.objects.filter(
+                user=self.request.user, content_type='post', object_id=OuterRef('pk')
+            )
+            comment_like_subquery = Like.objects.filter(
+                user=self.request.user, content_type='comment', object_id=OuterRef('pk')
+            )
+            comment_queryset = (
+                Comment.objects.select_related('author')
+                .annotate(liked_by_me=Exists(comment_like_subquery))
+                .order_by('tree_id', 'lft')
+            )
+            return (
+                Post.objects.select_related('author')
+                .annotate(liked_by_me=Exists(post_like_subquery))
+                .prefetch_related(Prefetch('comments', queryset=comment_queryset))
+            )
+        comment_queryset = (
+            Comment.objects.select_related('author')
+            .annotate(liked_by_me=Value(False, output_field=BooleanField()))
+            .order_by('tree_id', 'lft')
+        )
+        return (
+            Post.objects.select_related('author')
+            .annotate(liked_by_me=Value(False, output_field=BooleanField()))
+            .prefetch_related(Prefetch('comments', queryset=comment_queryset))
         )
 
 

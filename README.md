@@ -94,6 +94,7 @@ Playto is designed for performance and clarity: posts are cached, leaderboard da
 ## Tech Stack
 
 Frontend
+
 - React 18
 - Vite
 - Tailwind CSS
@@ -102,6 +103,7 @@ Frontend
 - React Query
 
 Backend
+
 - Django 4.2+
 - Django REST Framework
 - PostgreSQL 15
@@ -139,6 +141,7 @@ Playto/
 ## API Endpoints
 
 Auth
+
 - `POST /api/auth/register/` - Register a new user
 - `POST /api/auth/login/` - Login and receive JWT tokens
 - `POST /api/auth/logout/` - Logout (client clears tokens)
@@ -150,6 +153,7 @@ Auth
 - `POST /api/auth/token/refresh/` - Refresh access token
 
 Posts
+
 - `GET /api/posts/` - List posts (paginated, cached)
 - `POST /api/posts/` - Create a post
 - `GET /api/posts/<id>/` - Post detail
@@ -158,10 +162,12 @@ Posts
 - `POST /api/posts/<id>/like/` - Toggle like on a post
 
 Comments
+
 - `POST /api/comments/` - Create a comment or reply
 - `POST /api/comments/<id>/like/` - Toggle like on a comment
 
 Karma
+
 - `GET /api/leaderboard/` - 24-hour leaderboard
 
 ---
@@ -178,6 +184,7 @@ cd Playto
 ### Environment Variables
 
 Backend `.env`
+
 ```
 DEBUG=True
 SECRET_KEY=your-secret-key
@@ -188,6 +195,7 @@ CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 ```
 
 Frontend `.env`
+
 ```
 VITE_API_URL=http://localhost:8000/api
 ```
@@ -205,6 +213,7 @@ docker-compose up --build
 ### Run Locally
 
 Backend
+
 ```bash
 cd backend
 python -m venv venv
@@ -217,6 +226,7 @@ python manage.py runserver 127.0.0.1:8000
 ```
 
 Frontend
+
 ```bash
 cd frontend
 npm install
@@ -229,30 +239,40 @@ npm run dev -- --host 127.0.0.1 --port 5173
 ## Deploy (Vercel + Render + Upstash + Postgres)
 
 ### 1) Postgres (Render / Neon / Supabase)
+
 Use a managed Postgres database and copy its connection string:
+
 ```
 DATABASE_URL=postgresql://user:password@host:5432/dbname
 ```
 
 ### 2) Redis (Upstash)
+
 Create a free Upstash Redis database and copy the Redis URL:
+
 ```
 REDIS_URL=rediss://:password@host:port
 ```
 
 ### 3) Backend (Render Web Service)
+
 Create a Render **Web Service** from this repo:
+
 - Root directory: `backend`
 - Build command:
+
 ```
 pip install -r requirements.txt && python manage.py migrate
 ```
+
 - Start command:
+
 ```
 gunicorn config.wsgi:application
 ```
 
 Set environment variables:
+
 ```
 DEBUG=False
 SECRET_KEY=your-strong-secret
@@ -263,27 +283,34 @@ CORS_ALLOWED_ORIGINS=https://playto.pw,https://www.playto.pw
 ```
 
 Add a custom domain (Render → Settings → Custom Domains):
+
 ```
 api.playto.pw
 ```
+
 Create a CNAME in Namecheap:
+
 ```
 Host: api
 Value: <your-render-service>.onrender.com
 ```
 
 ### 4) Frontend (Vercel)
+
 Create a Vercel project:
+
 - Root directory: `frontend`
 - Build command: `npm run build`
 - Output directory: `dist`
 
 Set environment variable:
+
 ```
 VITE_API_URL=https://api.playto.pw/api
 ```
 
 Add domains in Vercel:
+
 - `playto.pw`
 - `www.playto.pw`
 
@@ -294,6 +321,7 @@ Then add DNS records in Namecheap as shown by Vercel (A record for `@`, CNAME fo
 ## Scripts
 
 Backend
+
 ```bash
 cd backend
 pytest
@@ -301,6 +329,7 @@ pytest --cov=apps
 ```
 
 Frontend
+
 ```bash
 cd frontend
 npm test

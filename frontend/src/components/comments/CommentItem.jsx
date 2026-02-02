@@ -11,6 +11,7 @@ export const CommentItem = ({ comment, level, postId }) => {
   const toggleLike = useToggleCommentLike();
   const { isAuthenticated } = useAuth();
   const [showReply, setShowReply] = useState(false);
+  const isLiked = Boolean(comment.liked_by_me);
 
   return (
     <div className="border border-line rounded-2xl p-4 bg-cream">
@@ -28,9 +29,11 @@ export const CommentItem = ({ comment, level, postId }) => {
       <div className="flex items-center space-x-4 text-xs text-ink/70">
         <button
           onClick={() => toggleLike.mutate(comment.id)}
-          className="flex items-center space-x-2 hover:text-accent"
+          className={`flex items-center space-x-2 transition ${
+            isLiked ? 'text-accent' : 'hover:text-accent'
+          }`}
         >
-          <Heart size={14} />
+          <Heart size={14} fill={isLiked ? 'currentColor' : 'none'} />
           <span>{comment.like_count}</span>
         </button>
         {isAuthenticated && (

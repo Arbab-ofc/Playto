@@ -20,6 +20,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class CommentFlatSerializer(serializers.ModelSerializer):
     author_username = serializers.SerializerMethodField()
     parent_id = serializers.IntegerField(allow_null=True, required=False)
+    liked_by_me = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Comment
@@ -31,13 +32,23 @@ class CommentFlatSerializer(serializers.ModelSerializer):
             'author_username',
             'created_at',
             'like_count',
+            'liked_by_me',
             'is_anonymous',
             'level',
             'lft',
             'rght',
             'tree_id',
         ]
-        read_only_fields = ['author_username', 'created_at', 'like_count', 'level', 'lft', 'rght', 'tree_id']
+        read_only_fields = [
+            'author_username',
+            'created_at',
+            'like_count',
+            'liked_by_me',
+            'level',
+            'lft',
+            'rght',
+            'tree_id',
+        ]
 
     def get_author_username(self, obj):
         return 'Anonymous' if obj.is_anonymous else obj.author.username

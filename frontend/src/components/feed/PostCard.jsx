@@ -14,6 +14,7 @@ export const PostCard = ({ post }) => {
   const { isAuthenticated } = useAuth();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isAnonymous = post.is_anonymous || post.author_username === 'Anonymous';
+  const isLiked = Boolean(post.liked_by_me);
 
   return (
     <motion.div
@@ -35,9 +36,11 @@ export const PostCard = ({ post }) => {
       <p className="text-sm leading-relaxed mb-4 text-ink/90">{post.content}</p>
       <button
         onClick={() => toggleLike.mutate(post.id)}
-        className="flex items-center space-x-2 text-xs uppercase tracking-[0.2em] text-ink/70 hover:text-accent"
+        className={`flex items-center space-x-2 text-xs uppercase tracking-[0.2em] transition ${
+          isLiked ? 'text-accent' : 'text-ink/70 hover:text-accent'
+        }`}
       >
-        <Heart size={14} />
+        <Heart size={14} fill={isLiked ? 'currentColor' : 'none'} />
         <span>{post.like_count}</span>
       </button>
 
