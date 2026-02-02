@@ -44,7 +44,7 @@ export const usePosts = () => {
       const nextPage = Number(nextUrl.searchParams.get('page'));
       return Number.isNaN(nextPage) ? undefined : nextPage;
     },
-    keepPreviousData: true,
+    keepPreviousData: false,
     staleTime: 30000,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false
@@ -156,7 +156,7 @@ export const useUserPostsInfinite = (userId) => {
       const nextPage = Number(nextUrl.searchParams.get('page'));
       return Number.isNaN(nextPage) ? undefined : nextPage;
     },
-    keepPreviousData: true,
+    keepPreviousData: false,
     staleTime: 30000,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false

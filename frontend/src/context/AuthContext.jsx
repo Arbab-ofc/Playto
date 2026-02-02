@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { getAccessToken, getMe, login as loginRequest, logout as logoutRequest, register as registerRequest, updateMe } from '../services/auth';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  const qc = useQueryClient();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const me = await getMe();
       setUser(me);
+      qc.removeQueries({ queryKey: ['posts', 'anon'], exact: false });
     } catch {
       setUser(null);
     } finally {
@@ -39,6 +42,9 @@ export const AuthProvider = ({ children }) => {
     await loginRequest(credentials);
     const me = await getMe();
     setUser(me);
+    qc.removeQueries({ queryKey: ['posts', 'anon'], exact: false });
+    qc.removeQueries({ queryKey: ['posts', 'user'], exact: false });
+    qc.invalidateQueries({ queryKey: ['posts'], exact: false });
     return me;
   };
 
@@ -58,6 +64,7 @@ export const AuthProvider = ({ children }) => {
       await logoutRequest();
     } finally {
       setUser(null);
+      qc.removeQueries({ queryKey: ['posts'], exact: false });
     }
   };
 
