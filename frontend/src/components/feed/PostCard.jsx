@@ -7,6 +7,7 @@ import { useTogglePostLike } from '../../hooks/usePosts';
 import { useAuth } from '../../hooks/useAuth';
 import { CommentForm } from '../comments/CommentForm';
 import { PostDetailDrawer } from './PostDetailDrawer';
+import { MentionText } from '../ui/MentionText';
 
 export const PostCard = ({ post }) => {
   const toggleLike = useTogglePostLike();
@@ -46,7 +47,7 @@ export const PostCard = ({ post }) => {
             <p className="text-xs uppercase tracking-[0.2em] text-ink/60">
               {post.comments[0].author_username}
             </p>
-            <p className="text-sm text-ink/70 mt-2">{post.comments[0].content}</p>
+            <MentionText text={post.comments[0].content} className="text-sm text-ink/70 mt-2" />
           </div>
           {post.comments.length > 1 && (
             <button

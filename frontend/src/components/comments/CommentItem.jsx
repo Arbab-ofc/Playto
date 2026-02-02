@@ -5,6 +5,7 @@ import { formatDate } from '../../utils/formatDate';
 import { useToggleCommentLike } from '../../hooks/useComments';
 import { CommentReply } from './CommentReply';
 import { useAuth } from '../../hooks/useAuth';
+import { MentionText } from '../ui/MentionText';
 
 export const CommentItem = ({ comment, level, postId }) => {
   const toggleLike = useToggleCommentLike();
@@ -23,7 +24,7 @@ export const CommentItem = ({ comment, level, postId }) => {
         )}{' '}
         · {formatDate(comment.created_at)} · L{level}
       </div>
-      <p className="text-sm text-ink/70 mb-3">{comment.content}</p>
+      <MentionText text={comment.content} className="text-sm text-ink/70 mb-3" />
       <div className="flex items-center space-x-4 text-xs text-ink/70">
         <button
           onClick={() => toggleLike.mutate(comment.id)}

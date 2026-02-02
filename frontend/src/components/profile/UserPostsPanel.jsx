@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useUserPostsInfinite } from '../../hooks/usePosts';
 import { buildCommentTree } from '../../utils/buildCommentTree';
 import { formatDate } from '../../utils/formatDate';
+import { MentionText } from '../ui/MentionText';
 
 const countReplies = (comments = []) => comments.filter((c) => c.parent_id !== null).length;
 
@@ -78,7 +79,7 @@ export const UserPostsPanel = ({ userId, title = 'Your posts' }) => {
               {tree.length > 0 && (
                 <div className="mt-3 border border-line rounded-2xl p-3 bg-cream">
                   <p className="text-xs uppercase tracking-[0.2em] text-ink/60">Latest thread</p>
-                  <p className="text-sm text-ink/70 mt-2">{tree[0].content}</p>
+                  <MentionText text={tree[0].content} className="text-sm text-ink/70 mt-2" />
                 </div>
               )}
             </a>
