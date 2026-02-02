@@ -36,7 +36,7 @@
   - Run Locally
 - Scripts
 - Performance Notes
-- License
+- Contact
 
 ---
 
@@ -223,6 +223,16 @@ npm test -- --coverage
 
 ---
 
-## License
+## Contact
 
-MIT License
+<p align="left">
+  <a href="https://github.com/Arbab-ofc">
+    <img src="https://img.shields.io/badge/GitHub-Arbab--ofc-1F1E1C?logo=github&logoColor=white" alt="GitHub badge" />
+  </a>
+  <a href="mailto:arbabprvt@gmail.com">
+    <img src="https://img.shields.io/badge/Email-arbabprvt%40gmail.com-0B1F3A?logo=gmail&logoColor=white" alt="Email badge" />
+  </a>
+  <a href="https://www.linkedin.com/in/arbab-ofc/">
+    <img src="https://img.shields.io/badge/LinkedIn-arbab--ofc-1F1E1C?logo=linkedin&logoColor=white" alt="LinkedIn badge" />
+  </a>
+</p>
