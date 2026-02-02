@@ -65,7 +65,6 @@ export const useCreatePost = () => {
       return data;
     },
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
       qc.invalidateQueries({ queryKey: ['leaderboard'] });
     }
   });

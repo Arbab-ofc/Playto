@@ -49,7 +49,6 @@ export const useCreateComment = () => {
       if (variables?.post) {
         qc.invalidateQueries({ queryKey: ['posts', variables.post] });
       }
-      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
       qc.invalidateQueries({ queryKey: ['leaderboard'] });
     }
   });
