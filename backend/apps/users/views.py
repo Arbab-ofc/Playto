@@ -3,7 +3,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import UserSerializer, RegisterSerializer, ProfileUpdateSerializer
+from .serializers import UserSerializer, RegisterSerializer, ProfileUpdateSerializer, UserSuggestionSerializer
 
 User = get_user_model()
 
@@ -51,3 +51,14 @@ class UserByUsernameView(generics.RetrieveAPIView):
     permission_classes = [permissions.AllowAny]
     lookup_field = 'username'
     lookup_url_kwarg = 'username'
+
+
+class UserSearchView(generics.ListAPIView):
+    serializer_class = UserSuggestionSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        query = self.request.query_params.get('q', '').strip()
+        if not query:
+            return User.objects.none()
+        return User.objects.filter(username__icontains=query).order_by('username')[:8]

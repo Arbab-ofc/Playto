@@ -41,6 +41,12 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         fields = ['first_name', 'last_name', 'bio']
 
 
+class UserSuggestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name']
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     full_name = serializers.CharField(write_only=True, required=False, allow_blank=True)

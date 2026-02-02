@@ -11,3 +11,14 @@ export const usePublicUserProfile = (username) => {
     enabled: Boolean(username)
   });
 };
+
+export const useUserSearch = (query) => {
+  return useQuery({
+    queryKey: ['users', 'search', query],
+    queryFn: async () => {
+      const { data } = await api.get('/auth/users/search/', { params: { q: query } });
+      return data;
+    },
+    enabled: Boolean(query)
+  });
+};
