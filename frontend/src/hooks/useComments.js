@@ -12,6 +12,8 @@ export const useCreateComment = () => {
       if (variables?.post) {
         qc.invalidateQueries({ queryKey: ['posts', variables.post] });
       }
+      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
+      qc.invalidateQueries({ queryKey: ['leaderboard'] });
     }
   });
 };
@@ -23,6 +25,9 @@ export const useToggleCommentLike = () => {
       const { data } = await api.post(`/comments/${id}/like/`);
       return data;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['posts'] })
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
+      qc.invalidateQueries({ queryKey: ['leaderboard'] });
+    }
   });
 };

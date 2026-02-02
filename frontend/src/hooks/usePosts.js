@@ -18,14 +18,16 @@ export const usePosts = () => {
   });
 };
 
-export const usePost = (id) => {
+export const usePost = (id, options = {}) => {
+  const { enabled = true, ...rest } = options;
   return useQuery({
     queryKey: ['posts', id],
     queryFn: async () => {
       const { data } = await api.get(`/posts/${id}/`);
       return data;
     },
-    enabled: Boolean(id)
+    enabled: Boolean(id) && enabled,
+    ...rest
   });
 };
 
@@ -36,7 +38,10 @@ export const useCreatePost = () => {
       const { data } = await api.post('/posts/', payload);
       return data;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['posts'] })
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
+      qc.invalidateQueries({ queryKey: ['leaderboard'] });
+    }
   });
 };
 
@@ -47,7 +52,10 @@ export const useTogglePostLike = () => {
       const { data } = await api.post(`/posts/${id}/like/`);
       return data;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['posts'] })
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
+      qc.invalidateQueries({ queryKey: ['leaderboard'] });
+    }
   });
 };
 

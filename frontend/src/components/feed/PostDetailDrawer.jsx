@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 import { CommentTree } from '../comments/CommentTree';
 import { CommentForm } from '../comments/CommentForm';
 import { useAuth } from '../../hooks/useAuth';
+import { usePost } from '../../hooks/usePosts';
 
 export const PostDetailDrawer = ({ post, isOpen, onClose }) => {
   const { isAuthenticated } = useAuth();
-  const isAnonymous = post.is_anonymous || post.author_username === 'Anonymous';
+  const { data: freshPost } = usePost(post?.id, { enabled: isOpen && Boolean(post?.id) });
+  const activePost = freshPost || post;
+  const isAnonymous = activePost.is_anonymous || activePost.author_username === 'Anonymous';
 
   useEffect(() => {
     if (!isOpen) return;
@@ -49,8 +52,8 @@ export const PostDetailDrawer = ({ post, isOpen, onClose }) => {
                     {isAnonymous ? (
                       'Anonymous'
                     ) : (
-                      <Link to={`/u/${encodeURIComponent(post.author_username)}`} className="hover:text-ink">
-                        {post.author_username}
+                      <Link to={`/u/${encodeURIComponent(activePost.author_username)}`} className="hover:text-ink">
+                        {activePost.author_username}
                       </Link>
                     )}
                   </h3>
@@ -65,23 +68,23 @@ export const PostDetailDrawer = ({ post, isOpen, onClose }) => {
               </div>
 
               <div className="border border-line rounded-2xl p-4 bg-cream">
-                <p className="text-sm text-ink/80">{post.content}</p>
+                <p className="text-sm text-ink/80">{activePost.content}</p>
               </div>
 
               <div className="mt-6">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-display text-xl">Comments</h4>
-                  <span className="text-xs text-ink/60">{post.comments?.length || 0} total</span>
+                  <span className="text-xs text-ink/60">{activePost.comments?.length || 0} total</span>
                 </div>
 
                 {isAuthenticated ? (
-                  <CommentForm postId={post.id} />
+                  <CommentForm postId={activePost.id} />
                 ) : (
                   <p className="text-xs text-ink/60">Sign in to reply.</p>
                 )}
 
                 <div className="mt-4">
-                  <CommentTree comments={post.comments || []} postId={post.id} maxDepth={50} />
+                  <CommentTree comments={activePost.comments || []} postId={activePost.id} maxDepth={50} />
                 </div>
               </div>
             </div>
