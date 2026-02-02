@@ -56,6 +56,15 @@ Playto is designed for performance and clarity: posts are cached, leaderboard da
 
 ---
 
+## Live Links
+
+- App: `https://playto.pw`
+- App (www): `https://www.playto.pw`
+- API: `https://api.playto.pw`
+- GitHub: `https://github.com/Arbab-ofc/Playto`
+
+---
+
 ## Features
 
 - Post feed with infinite scroll and quick snapshots
