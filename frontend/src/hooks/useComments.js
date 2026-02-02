@@ -91,7 +91,6 @@ export const useToggleCommentLike = () => {
           like_count: typeof nextCount === 'number' ? nextCount : comment.like_count
         }))
       );
-      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
       qc.invalidateQueries({ queryKey: ['leaderboard'] });
     }
   });

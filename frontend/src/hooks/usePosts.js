@@ -119,7 +119,6 @@ export const useTogglePostLike = () => {
           like_count: typeof nextCount === 'number' ? nextCount : post.like_count
         }))
       );
-      qc.invalidateQueries({ queryKey: ['posts'], exact: false });
       qc.invalidateQueries({ queryKey: ['leaderboard'] });
     }
   });
