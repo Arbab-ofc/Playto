@@ -44,6 +44,12 @@
 
 Playto is a tactile, modern community feed built around short posts, nested replies, and momentum-driven karma. It includes a bottom-sheet post detail drawer, anonymous mode, public profiles, and a 24-hour leaderboard.
 
+Playto’s flow is simple: anyone can explore the feed and leaderboard, and logged-in members can publish posts, reply in deep threads, and react to content with likes that turn into karma. Karma drives the 24-hour leaderboard, rewarding recent activity rather than lifetime totals. Users can switch into anonymous mode for a post or reply, while the system still preserves reputation behind the scenes.
+
+The UI is intentionally “soft and tactile,” with card-like surfaces, subtle shadows, and a warm palette in light mode. Dark mode adds a textured noise layer and soft glows to keep the experience atmospheric. Profiles show a member’s public footprint (karma, recent momentum, total post likes, and posts list) while private profiles allow bio edits and personal stats.
+
+Playto is designed for performance and clarity: posts are cached, leaderboard data is cached, and the UI relies on React Query + infinite scrolling for smooth browsing. Mentions (`@username`) are linkified and supported by autocomplete to quickly route conversations to the right people.
+
 ---
 
 ## Features
